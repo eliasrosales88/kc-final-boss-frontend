@@ -5,7 +5,7 @@ import Layout from "../Layout/Layout";
 const App = () => (
   <Fragment>
     <Layout mainContainerClassName="main-container" sectionTitle="Advert Grid">
-
+  
     </Layout>
   </Fragment>
 );
