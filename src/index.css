@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/**
+* Color palette (generated with https://coolors.co/)
+*/
+:root {
+  --primary:#00b248;
+  --primart-light: #00e676;
+  --accent:  #0d47a1;
+  --accent-dark: #002171;
+  --accent-light:  #5472d3;
+  --light-grey: #e8e8e8;
+  --white: #ffffff;
+  --black: #333333;
+}
+
+
+.main-container { 
+  background-color: var(--light-grey); 
+  height: calc(100vh - 64px); 
+  padding-top: 5px;
+}
