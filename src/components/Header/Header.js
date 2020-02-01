@@ -1,36 +1,23 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import SideNav from "../SideNav/SideNav";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
 
-export default function Header() {
-  const classes = useStyles();
+import "./Header.css";
+
+const Header = () => {
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className="header-main">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
+        <SideNav />
+          <Typography variant="h6" >
             Wallaclone
           </Typography>
+          <span className="spacer"></span>
           <Button color="inherit">Register</Button>
         </Toolbar>
       </AppBar>
-    </div>
   );
 }
+export default Header;

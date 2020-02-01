@@ -17,7 +17,7 @@ code {
 */
 :root {
   --primary:#00b248;
-  --primart-light: #00e676;
+  --primary-light: #00e676;
   --accent:  #0d47a1;
   --accent-dark: #002171;
   --accent-light:  #5472d3;
@@ -26,7 +26,9 @@ code {
   --black: #333333;
 }
 
-
+.spacer {
+  flex: 1 1 auto;
+}
 .main-container { 
   background-color: var(--light-grey); 
   height: calc(100vh - 64px); 
