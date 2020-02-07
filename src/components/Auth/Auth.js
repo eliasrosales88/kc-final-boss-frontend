@@ -7,15 +7,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useForm } from "react-hook-form";
+import * as actions from "../../store/actions";
+import { connect } from "react-redux";
 
-export default function Auth(props) {
+const Auth = (props) => {
   const [open, setOpen] = React.useState(false);
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log(data);
-    // props.history.push("/");
+    props.onRegisterSubmit(data);
+    
     // handleClose();
   };
 
@@ -102,3 +104,15 @@ export default function Auth(props) {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+  };
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    onRegisterSubmit: (val) => dispatch(actions.registerUser(val)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)((Auth));
