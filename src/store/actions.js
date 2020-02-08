@@ -1,20 +1,31 @@
 import * as types from './types';
-import { getSession, getAdvert } from './selectors';
+import { getSession } from './selectors';
 
 
 export const registrationRequest = () => ({
   type: types.REGISTRATION_REQUEST,
 });
 
-export const registrationSuccesfull = resData => ({
+export const registrationSuccessfull = registrationData => ({
   type: types.REGISTRATION_SUCCESSFULL,
-  resData,
+  registrationData,
 });
 
 export const registrationFail = error => ({
   type: types.REGISTRATION_FAIL,
   error,
 });
+
+export const authRequest = (userData) => ({
+  type: types.AUTH_REQUEST,
+  userData,
+});
+
+export const authSuccessfull = (userData) => ({
+  type: types.AUTH_SUCCESSFULL,
+  userData,
+});
+
 
 
 export const registerUser = (userData) => async (
@@ -27,8 +38,20 @@ export const registerUser = (userData) => async (
   dispatch(registrationRequest());
   try {
     const { apiUrl } = getSession(state);
-    const resData = await WallacloneAPI(apiUrl).postRegistration(userData);
-    dispatch(registrationSuccesfull(resData.data));
+    const registrationData = await WallacloneAPI(apiUrl).postRegistration(userData);
+    console.log(registrationData);
+    
+    if (registrationData.data.success) {
+      dispatch(registrationSuccessfull(registrationData.data));
+      //CREAR METODO PARA EJUCUTAR AQUI ???
+      const authData = await WallacloneAPI(apiUrl).postAuth({email:userData.email, password: userData.password});
+      console.log("AUTH DATA",authData);
+      
+      // dispatch(authenticate(registrationData.data))
+      
+    } else {
+      
+    }
     //if not registered dispatch(registerNotSucceed)
     // else dispatch authenticate ??
   } catch (error) {

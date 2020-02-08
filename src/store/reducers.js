@@ -20,7 +20,7 @@ export const register = (state = defaultState.session, action) => {
     case types.REGISTRATION_SUCCESSFULL:
       return {
         ...state,
-        ...action.resData.data
+        ...action.registrationData.data
       };
 
     case types.REGISTRATION_FAIL:
