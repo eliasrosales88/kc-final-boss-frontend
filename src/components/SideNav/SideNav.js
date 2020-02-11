@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core';
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core';
+
 import MenuIcon from '@material-ui/icons/Menu';
+import BallotIcon from '@material-ui/icons/Ballot';
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles({
   list: {
@@ -34,6 +36,19 @@ export default function SideNav() {
     setState({ ...state, [side]: open });
   };
 
+  const loginList = (index) => {
+    switch (index) {
+      case 0:
+        return  <Fragment><BallotIcon /></Fragment>;
+      case 1:
+        return  <Fragment><PersonIcon /></Fragment>;
+      case 2:
+        return  <Fragment><ExitToAppIcon /></Fragment>;
+    
+      default:
+        return null;
+    }
+  }
   const sideList = side => (
     <div
       className={classes.list}
@@ -41,53 +56,13 @@ export default function SideNav() {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
 
-  const fullList = side => (
-    <div
-      className={classes.fullList}
-      role="presentation"
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
+      
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["My adverts", "My Account", "Logout"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {loginList(index)}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -105,27 +80,7 @@ export default function SideNav() {
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
         {sideList("left")}
       </Drawer>
-      <Drawer
-        anchor="top"
-        open={state.top}
-        onClose={toggleDrawer("top", false)}
-      >
-        {fullList("top")}
-      </Drawer>
-      <Drawer
-        anchor="bottom"
-        open={state.bottom}
-        onClose={toggleDrawer("bottom", false)}
-      >
-        {fullList("bottom")}
-      </Drawer>
-      <Drawer
-        anchor="right"
-        open={state.right}
-        onClose={toggleDrawer("right", false)}
-      >
-        {sideList("right")}
-      </Drawer>
+
     </div>
   );
 }

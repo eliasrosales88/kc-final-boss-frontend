@@ -46,7 +46,7 @@ store.subscribe(() => {
   const { lastAction, session } = store.getState();
   console.log("STORE");
   
-  if (lastAction.type === types.SESSION_SAVE && lastAction.remember) {
+  if (lastAction.type === types.SESSION_SAVE) {
     LocalStorage.saveLocalStorage(session);
   }
   

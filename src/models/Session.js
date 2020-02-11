@@ -18,11 +18,11 @@ export default class Session {
     username = null,
     email = null,
     apiUrl = Config.API_URL,
-    maxAdverts = Config.MAX_ADVERTS_GRID,
+    token = null
   ) {
     this.username = username;
     this.email = email;
     this.apiUrl = apiUrl;
-    this.maxAdverts = maxAdverts;
+    this.token = token;
   }
 }

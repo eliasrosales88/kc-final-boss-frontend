@@ -43,11 +43,15 @@ export const registerUser = (userData) => async (
     
     if (registrationData.data.success) {
       dispatch(registrationSuccessfull(registrationData.data));
-      //CREAR METODO PARA EJUCUTAR AQUI ???
       const authData = await WallacloneAPI(apiUrl).postAuth({email:userData.email, password: userData.password});
       console.log("AUTH DATA",authData);
+      console.log("REGISTRATION DATA",registrationData);
       
-      // dispatch(authenticate(registrationData.data))
+      dispatch(saveSession({
+        username: registrationData.data.data.username,
+        email: registrationData.data.data.email,
+        token: authData.data.token,
+      }))
       
     } else {
       
@@ -59,12 +63,10 @@ export const registerUser = (userData) => async (
   }
 };
 
-// export const authenticateUser =
 
-export const saveSession = (session, remember) => ({
+export const saveSession = (session) => ({
   type: types.SESSION_SAVE,
   session,
-  remember,
 });
 
 export const clearSession = () => ({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,15 +9,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { useForm } from "react-hook-form";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
+import { getSession } from "../../store/selectors";
 
-const Auth = (props) => {
+const Auth = props => {
   const [open, setOpen] = React.useState(false);
   const { register, handleSubmit, errors } = useForm({});
+
+  console.log(props);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     props.onRegisterSubmit(data);
-    
+
     // handleClose();
   };
 
@@ -30,10 +33,13 @@ const Auth = (props) => {
   };
 
   return (
-    <div>
-      <Button color="inherit" onClick={handleClickOpen}>
-        Register
-      </Button>
+    <Fragment>
+      {typeof props.sessionStore === "object" &&
+        !props.sessionStore.username && (
+          <Button color="inherit" onClick={handleClickOpen}>
+            Register
+          </Button>
+        )}
 
       <Dialog
         open={open}
@@ -89,7 +95,10 @@ const Auth = (props) => {
               error={!!errors.password}
               inputRef={register({ required: true, minLength: 8 })}
             />
-            <p>{errors.password && "Invalid password, should have at least 8 characters"}</p>
+            <p>
+              {errors.password &&
+                "Invalid password, should have at least 8 characters"}
+            </p>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
@@ -101,18 +110,19 @@ const Auth = (props) => {
           </DialogActions>
         </form>
       </Dialog>
-    </div>
+    </Fragment>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
+    sessionStore: getSession(state)
   };
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
-    onRegisterSubmit: (val) => dispatch(actions.registerUser(val)),
-  }
-}
+    onRegisterSubmit: val => dispatch(actions.registerUser(val))
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)((Auth));
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

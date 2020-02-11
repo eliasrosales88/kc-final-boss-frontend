@@ -35,7 +35,9 @@ export const register = (state = defaultState.session, action) => {
 export const session = (state = defaultState.session, action) => {
   switch (action.type) {
     case types.SESSION_SAVE:
-      return { ...state, ...action.session };
+      return { ...state, 
+        ...action.session 
+      };
 
     case types.SESSION_CLEAR:
       return defaultState.session;
