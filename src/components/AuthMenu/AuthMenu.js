@@ -6,9 +6,11 @@ import { getSession } from "../../store/selectors";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 
-const UserMenu = (props) => {
+const AuthMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  console.log(props);
+  
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -19,19 +21,15 @@ const UserMenu = (props) => {
 
   return (
     <Fragment>
-      <Button 
-      color="inherit"
-      aria-controls="simple-menu"
-      aria-haspopup="true"
-      onClick={handleClick}
+      <Button
+        color="inherit"
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
       >
-        {
-          <Fragment>
-          {props.sessionStore.username}
-          </Fragment>
-        }
+        Sign in
       </Button>
-  
+
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -39,22 +37,22 @@ const UserMenu = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Account</MenuItem>
-        <MenuItem onClick={props.onUserLogout}>Logout</MenuItem>
+        <MenuItem onClick={props.onRouteRegister}>Register</MenuItem>
+        <MenuItem onClick={props.onRouteLogin}>Login</MenuItem>
       </Menu>
     </Fragment>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
-    sessionStore: getSession(state)
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onUserLogout: () => dispatch(actions.userLogout())
+    onRouteRegister: () => dispatch(actions.routeRegister()),
+    onRouteLogin: () => dispatch(actions.routeLogin()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthMenu);

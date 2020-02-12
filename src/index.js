@@ -19,7 +19,7 @@ const renderApp = props =>
 /********************
  * Browser history
  *******************/
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
 
 /********************

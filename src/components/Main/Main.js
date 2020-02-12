@@ -11,9 +11,7 @@ export default function Main({ containerClassName, children, sectionTitle }) {
       {sectionTitle &&
       <h2>{sectionTitle}</h2>
       }
-      <Button variant="contained" color="primary">
-          Hello World
-        </Button>
+     
         {children}
       </Container>
     </Fragment>

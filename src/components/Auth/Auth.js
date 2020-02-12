@@ -1,18 +1,14 @@
 import React, { Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
 import { useForm } from "react-hook-form";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
 import { getSession } from "../../store/selectors";
+import "./Auth.css";
 
 const Auth = props => {
-  const [open, setOpen] = React.useState(false);
   const { register, handleSubmit, errors } = useForm({});
 
   console.log(props);
@@ -20,40 +16,14 @@ const Auth = props => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     props.onRegisterSubmit(data);
-
-    // handleClose();
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Fragment>
-      {typeof props.sessionStore === "object" &&
-        !props.sessionStore.username && (
-          <Button color="inherit" onClick={handleClickOpen}>
-            Register
-          </Button>
-        )}
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Registration</DialogTitle>
-
         <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogContent>
-            <DialogContentText>
-              Please, fill the form below to register. Remember that you are
+              Fill the form below to register. Remember that you are
               accepting our cookie policy once registered.
-            </DialogContentText>
             <TextField
               required
               autoFocus
@@ -99,17 +69,11 @@ const Auth = props => {
               {errors.password &&
                 "Invalid password, should have at least 8 characters"}
             </p>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button type="submit" color="primary">
+            
+            <Button type="submit" variant="contained" className="auth-button">
               Register
             </Button>
-          </DialogActions>
         </form>
-      </Dialog>
     </Fragment>
   );
 };
@@ -121,7 +85,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onRegisterSubmit: val => dispatch(actions.registerUser(val))
+    onRegisterSubmit: val => dispatch(actions.registerUser(val)),
   };
 };
 
