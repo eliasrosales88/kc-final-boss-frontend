@@ -1,5 +1,5 @@
 export const AUTH_REQUEST = 'AUTH_REQUEST';
-export const AUTH_SUCCESSFULL = 'AUTH_SUCCESSFULL';
+export const AUTH_SUCCESSFUL = 'AUTH_SUCCESSFUL';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_NOTALLOWED = 'AUTH_NOTALLOWED';
 

@@ -7,7 +7,7 @@ export const authRequest = () => ({
 });
 
 export const authSuccessfull = authData => ({
-  type: types.AUTH_SUCCESSFULL,
+  type: types.AUTH_SUCCESSFUL,
   authData
 });
 

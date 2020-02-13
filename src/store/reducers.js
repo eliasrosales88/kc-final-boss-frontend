@@ -5,6 +5,7 @@ import Session from '../models/Session';
 const defaultState = {
   auth: {},
   session: new Session(),
+  ui: {}
 };
 
 
@@ -22,7 +23,7 @@ export const auth = (state = defaultState.session, action) => {
         notAllowed: true
       };
       
-    case types.AUTH_SUCCESSFULL:
+    case types.AUTH_SUCCESSFUL:
       return {
         ...state,
         ...action.authData.data
@@ -54,5 +55,28 @@ export const session = (state = defaultState.session, action) => {
   }
 };
 
+export const ui = (state = defaultState.ui, action) => {
+  if (/_REQUEST$/.test(action.type)) {
+    return {
+      loading: true,
+      error: null,
+    };
+  }
+
+  if (/_SUCCESSFUL$/.test(action.type)) {
+    return {
+      loading: false,
+      error: null,
+    };
+  }
+
+  if (/_FAIL$/.test(action.type)) {
+    return {
+      loading: false,
+      error: action.error,
+    };
+  }
+  return state;
+};
 
 

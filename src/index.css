@@ -24,7 +24,19 @@ code {
   --light-grey: #e8e8e8;
   --white: #ffffff;
   --black: #333333;
+  --danger: #c62828;
 }
+
+.bg-primary { background: var(--primary);}
+.bg-primary-light { background: var(--primary-light);}
+.bg-accent { background: var(--accent);}
+.bg-accent-dark { background: var(--accent-dark);}
+.bg-accent-light { background: var(--accent-light);}
+.bg-light-grey { background: var(--light-grey);}
+.bg-white { background: var(--white);}
+.bg-black { background: var(--black);}
+.bg-danger { background: var(--danger);}
+
 
 .spacer {
   flex: 1 1 auto;
@@ -34,3 +46,56 @@ code {
   height: calc(100vh - 64px); 
   padding-top: 5px;
 }
+
+
+/**************
+* LOADER
+**************/
+.loader .MuiLinearProgress-barColorPrimary {
+  background-color: var(--primary);
+}
+
+
+/**************
+* ANIMATIONS
+**************/
+@-webkit-keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible !important;
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible !important;
+    opacity: 1;
+  }
+}
+
+.slideInUp {
+  animation-name: slideInUp;
+  -webkit-animation-duration: 1s !important;
+  animation-duration: 1s !important;
+  -webkit-animation-iteration-count: 1 !important;
+  animation-iteration-count: 1 !important;
+}
+

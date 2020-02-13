@@ -13,7 +13,12 @@ export const getSession = state => state.session;
 export const getTags = state => state.tags;
 
 
+/**********************
+ *  UI 
+ **********************/
+ export const getUi = state => state.ui;
 
+ 
 // export const getAdverts = state => state.adverts;
 // export const getMaxAdverts = state => getSession(state).maxAdverts;
 // export const getNumAdverts = state => getAdverts(state).length;
@@ -21,4 +26,3 @@ export const getTags = state => state.tags;
 //   Math.ceil(getNumAdverts(state) / getMaxAdverts(state));
 // export const getAdvert = state => advertId =>
 //   getAdverts(state).find(advert => advert._id === advertId);
-// export const getUi = state => state.ui;
