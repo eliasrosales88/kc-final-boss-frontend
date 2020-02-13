@@ -4,6 +4,7 @@ import Layout from "../Layout/Layout";
 import ErrorBoundary from "../ErrorBoundary";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Auth from "../Auth/Auth";
+import Home from "../Home/Home";
 
 
 
@@ -21,11 +22,11 @@ const App = (props) => {
           <Switch>
             <Route path="/register" exact component={Auth} />
             <Route path="/login" exact component={Auth} />
+            <Route path="/" exact component={Home} />
             {/* <PrivateRoute path="/profile" exact component={Profile} />
      <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
      <PrivateRoute path="/advert/:id/edit" exact component={AdvertEdit} />
      <PrivateRoute path="/advert/:id" exact component={AdvertDetail} />
-     <PrivateRoute path="/" exact component={Home} />
      <PrivateRoute component={Error404} /> */}
           </Switch>
         </Layout>
@@ -42,7 +43,7 @@ const titleHandler = (key) => {
       return "Login"
   
     default:
-      return "Wallaclone";
+      return "";
   }
 }
 
