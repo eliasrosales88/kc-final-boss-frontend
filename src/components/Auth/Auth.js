@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
@@ -28,81 +28,77 @@ const Auth = props => {
       : props.onLoginSubmit(data);
   };
 
-  const handleNotification = (message = "", variant) => {
-    props.enqueueSnackbar(message, {
-      variant: variant,
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "center"
-      }
-    });
-  };
+  
 
   return (
     <Fragment>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {authMethod === "/register" && (
+      <div className="auth-container">
+        <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+          {authMethod === "/register" && (
+            <p>
+              Fill the form below to register. Remember that you are accepting
+              our cookie policy once registered.
+            </p>
+          )}
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="username"
+            name="username"
+            label="Username"
+            fullWidth
+            error={!!errors.username}
+            inputRef={register({ required: true, minLength: 5 })}
+          />
           <p>
-            Fill the form below to register. Remember that you are accepting our
-            cookie policy once registered.
+            {errors.username &&
+              "Invalid username, should have at least 5 characters"}
           </p>
+          {authMethod === "/register" && (
+            <Fragment>
+              <TextField
+                required
+                margin="dense"
+                id="email"
+                label="Email Address"
+                name="email"
+                type="email"
+                fullWidth
+                autoComplete="email"
+                error={!!errors.email}
+                inputRef={register({
+                  pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                })}
+              />
+              <p>{errors.email && "Invalid email address"}</p>
+            </Fragment>
+          )}
+          <TextField
+            required
+            margin="dense"
+            id="password"
+            label="Password"
+            name="password"
+            type="password"
+            fullWidth
+            error={!!errors.password}
+            inputRef={register({ required: true, minLength: 8 })}
+          />
+          <p>
+            {errors.password &&
+              "Invalid password, should have at least 8 characters"}
+          </p>
+          <Button type="submit" variant="contained" className="auth-button">
+            Register
+          </Button>
+        </form>
+        {props.notAuth && (
+          <div className="auth-message slideInUp">
+            {props.notAllowedMessage}
+          </div>
         )}
-        <TextField
-          required
-          autoFocus
-          margin="dense"
-          id="username"
-          name="username"
-          label="Username"
-          fullWidth
-          error={!!errors.username}
-          inputRef={register({ required: true, minLength: 5 })}
-        />
-        <p>
-          {errors.username &&
-            "Invalid username, should have at least 5 characters"}
-        </p>
-        {authMethod === "/register" && (
-          <Fragment>
-            <TextField
-              required
-              margin="dense"
-              id="email"
-              label="Email Address"
-              name="email"
-              type="email"
-              fullWidth
-              autoComplete="email"
-              error={!!errors.email}
-              inputRef={register({
-                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-              })}
-            />
-            <p>{errors.email && "Invalid email address"}</p>
-          </Fragment>
-        )}
-        <TextField
-          required
-          margin="dense"
-          id="password"
-          label="Password"
-          name="password"
-          type="password"
-          fullWidth
-          error={!!errors.password}
-          inputRef={register({ required: true, minLength: 8 })}
-        />
-        <p>
-          {errors.password &&
-            "Invalid password, should have at least 8 characters"}
-        </p>
-        <Button type="submit" variant="contained" className="auth-button">
-          Register
-        </Button>
-      </form>
-      {props.notAuth && 
-        handleNotification(props.notAllowedMessage)
-      }
+      </div>
     </Fragment>
   );
 };
