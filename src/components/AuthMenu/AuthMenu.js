@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { getSession } from "../../store/selectors";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 
