@@ -3,28 +3,35 @@ import * as types from './types';
 import Session from '../models/Session';
 
 const defaultState = {
-  register: {},
-  registerSuccessfull: {},
+  auth: {},
   session: new Session(),
 };
 
 
-export const register = (state = defaultState.session, action) => {
+export const auth = (state = defaultState.session, action) => {
   switch (action.type) {
-    case types.REGISTRATION_REQUEST:
+    case types.AUTH_REQUEST:
       return { 
         ...state, 
-        registerStatus: true 
       };
 
-    case types.REGISTRATION_SUCCESSFULL:
+      case types.AUTH_NOTALLOWED:
       return {
         ...state,
-        ...action.registrationData.data
+        ...action.authData.data,
+        notAllowed: true
+      };
+      
+    case types.AUTH_SUCCESSFULL:
+      return {
+        ...state,
+        ...action.authData.data
       };
 
-    case types.REGISTRATION_FAIL:
+    case types.AUTH_FAIL:
       return action.error;
+
+      
 
     default:
       return state;

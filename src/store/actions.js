@@ -1,73 +1,119 @@
 import * as types from "./types";
 import { getSession } from "./selectors";
-// import { history } from "../index";
 
-export const registrationRequest = () => ({
-  type: types.REGISTRATION_REQUEST
+
+export const authRequest = () => ({
+  type: types.AUTH_REQUEST
 });
 
-export const registrationSuccessfull = registrationData => ({
-  type: types.REGISTRATION_SUCCESSFULL,
-  registrationData
+export const authSuccessfull = authData => ({
+  type: types.AUTH_SUCCESSFULL,
+  authData
 });
 
-export const registrationFail = error => ({
-  type: types.REGISTRATION_FAIL,
+export const authFail = error => ({
+  type: types.AUTH_FAIL,
   error
 });
 
-export const authRequest = userData => ({
-  type: types.AUTH_REQUEST,
-  userData
+
+export const authNotAllowed = authData => ({
+  type: types.AUTH_NOTALLOWED,
+  authData
 });
 
-export const authSuccessfull = userData => ({
-  type: types.AUTH_SUCCESSFULL,
-  userData
-});
 
-export const registerUser = userData => async (
+
+/*************************
+ * REGISTER
+ *************************/
+export const userRegister = userData => async (
   dispatch,
   getState,
-  {history, services: { WallacloneAPI } }
+  { history, services: { WallacloneAPI } }
 ) => {
   const state = getState();
 
-  dispatch(registrationRequest());
+  dispatch(authRequest());
   try {
     const { apiUrl } = getSession(state);
-    const registrationData = await WallacloneAPI(apiUrl).postRegistration(
+    const authData = await WallacloneAPI(apiUrl).postRegistration(
       userData
     );
-    console.log(registrationData);
 
-    if (registrationData.data.success) {
-      dispatch(registrationSuccessfull(registrationData.data));
-      const authData = await WallacloneAPI(apiUrl).postAuth({
+    if (authData.data.success) {
+      dispatch(authSuccessfull(authData.data));
+      const authDataResponse = await WallacloneAPI(apiUrl).postAuth({
         email: userData.email,
         password: userData.password
       });
-      console.log("AUTH DATA", authData);
-      console.log("REGISTRATION DATA", registrationData);
 
       dispatch(
         saveSession({
-          username: registrationData.data.data.username,
-          email: registrationData.data.data.email,
-          token: authData.data.token
+          username: authData.data.data.username,
+          email: authData.data.data.email,
+          token: authDataResponse.data.token
         })
       );
 
       history.push("/");
     } else {
+      dispatch(authNotAllowed(authData))
+    }
+  } catch (error) {
+    dispatch(authFail(error));
+  }
+};
+
+
+
+
+/*************************
+ * LOGIN
+ *************************/
+export const userLogin = authData => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+
+  dispatch(authRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const authDataResponse = await WallacloneAPI(apiUrl).postAuth(
+      authData
+    );
+
+    if (authDataResponse.data.success) {
+      dispatch(authSuccessfull(authDataResponse.data));
+      dispatch(
+        saveSession({
+          username: authData.username,
+          token: authDataResponse.data.token
+        })
+      );
+
+      history.push("/");
     }
     //if not registered dispatch(registerNotSucceed)
     // else dispatch authenticate ??
   } catch (error) {
-    dispatch(registrationFail(error));
+    dispatch(authFail(error));
   }
 };
 
+export const userLogout = () => (dispatch, getState, { history }) => {
+  dispatch(clearSession());
+  history.push("/");
+};
+
+
+
+
+/**********************
+ *  SESSION
+ **********************/
 export const saveSession = session => ({
   type: types.SESSION_SAVE,
   session
@@ -79,20 +125,14 @@ export const clearSession = () => ({
 
 
 
-export const userLogin = (...args) => (dispatch, getState, { history }) => {
-  dispatch(saveSession(...args));
-  history.push("/");
-};
 
-export const userLogout = () => (dispatch, getState, { history }) => {
-  dispatch(clearSession());
-  history.push("/");
-};
-
-export const routeRegister = () => (dispatch, getState, { history } ) => {
+/**********************
+ *  ROUTES
+ **********************/
+export const routeRegister = () => (dispatch, getState, { history }) => {
   history.push("/register");
 };
 
-export const routeLogin = () => (dispatch, getState, {history}) => {
+export const routeLogin = () => (dispatch, getState, { history }) => {
   history.push("/login");
 };
