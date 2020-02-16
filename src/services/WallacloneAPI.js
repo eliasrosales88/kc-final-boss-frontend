@@ -19,6 +19,9 @@ const Wallaclone = API_URL => {
       }
     },
 
+    /**
+     * Auth
+     */
     postAuth: async (data) => {
       try {
         // Endpoint
@@ -33,6 +36,22 @@ const Wallaclone = API_URL => {
       }
     },
 
+    /**
+     * Get Adverts
+     */
+    getAdverts: async (filters, otherParams) => {
+      try {
+        // Endpoint
+        let baseURL = `${API_URL}/adverts`;
+        // Call endpoint and return
+        let getResponse = await Axios.get(baseURL, {filters, otherParams});
+
+        return getResponse;
+      
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
 
    
   };

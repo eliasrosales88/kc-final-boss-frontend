@@ -5,6 +5,7 @@ import Session from '../models/Session';
 const defaultState = {
   auth: {},
   session: new Session(),
+  adverts: {},
   ui: {}
 };
 
@@ -49,6 +50,28 @@ export const session = (state = defaultState.session, action) => {
 
     case types.SESSION_CLEAR:
       return defaultState.session;
+
+    default:
+      return state;
+  }
+};
+
+export const adverts = (state = defaultState.adverts, action) => {
+  switch (action.type) {
+    case types.ADVERTS_REQUEST:
+      return { 
+        ...state, 
+      };
+
+      case types.ADVERTS_SUCCESSFUL:
+        return {
+          ...state,
+          ...action.advertsData.result
+        };
+  
+      case types.ADVERTS_FAIL:
+        return action.error;
+  
 
     default:
       return state;

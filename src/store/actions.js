@@ -1,7 +1,6 @@
 import * as types from "./types";
 import { getSession } from "./selectors";
 
-
 export const authRequest = () => ({
   type: types.AUTH_REQUEST
 });
@@ -16,13 +15,10 @@ export const authFail = error => ({
   error
 });
 
-
 export const authNotAllowed = authData => ({
   type: types.AUTH_NOTALLOWED,
   authData
 });
-
-
 
 /*************************
  * REGISTER
@@ -37,9 +33,7 @@ export const userRegister = userData => async (
   dispatch(authRequest());
   try {
     const { apiUrl } = getSession(state);
-    const authData = await WallacloneAPI(apiUrl).postRegistration(
-      userData
-    );
+    const authData = await WallacloneAPI(apiUrl).postRegistration(userData);
 
     if (authData.data.success) {
       dispatch(authSuccessfull(authData.data));
@@ -58,15 +52,12 @@ export const userRegister = userData => async (
 
       history.push("/");
     } else {
-      dispatch(authNotAllowed(authData))
+      dispatch(authNotAllowed(authData));
     }
   } catch (error) {
     dispatch(authFail(error));
   }
 };
-
-
-
 
 /*************************
  * LOGIN
@@ -81,9 +72,7 @@ export const userLogin = authData => async (
   dispatch(authRequest());
   try {
     const { apiUrl } = getSession(state);
-    const authDataResponse = await WallacloneAPI(apiUrl).postAuth(
-      authData
-    );
+    const authDataResponse = await WallacloneAPI(apiUrl).postAuth(authData);
 
     if (authDataResponse.data.success) {
       dispatch(authSuccessfull(authDataResponse.data));
@@ -108,9 +97,6 @@ export const userLogout = () => (dispatch, getState, { history }) => {
   history.push("/");
 };
 
-
-
-
 /**********************
  *  SESSION
  **********************/
@@ -123,8 +109,45 @@ export const clearSession = () => ({
   type: types.SESSION_CLEAR
 });
 
+/**********************
+ *  GET ADVERTS
+ **********************/
+export const advertsRequest = () => ({
+  type: types.ADVERTS_REQUEST
+});
+
+export const advertsSuccessfull = advertsData => ({
+  type: types.ADVERTS_SUCCESSFUL,
+  advertsData
+});
+
+export const advertsFail = error => ({
+  type: types.ADVERTS_FAIL,
+  error
+});
 
 
+export const getAdverts = (filters, otherParams) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+
+  const state = getState();
+  dispatch(advertsRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(filters, otherParams);
+    console.log('advertsDataResponse', advertsDataResponse);
+    
+    if (advertsDataResponse.data.ok) {
+      dispatch(advertsSuccessfull(advertsDataResponse.data));
+    }
+
+  } catch (error) {
+    dispatch(advertsFail(error));
+  }
+};
 
 /**********************
  *  ROUTES
