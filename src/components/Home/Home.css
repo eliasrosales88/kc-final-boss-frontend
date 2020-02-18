@@ -2,6 +2,9 @@
 }
 
 .home-filters {
+  background: red;
+  min-height: 250px;
+  margin-bottom: 10px;
 }
 
 .home-advert-list {
@@ -10,21 +13,22 @@
 }
 
 .home-advert-list-item {
-  margin: 2px;
+  margin: 10px;
   flex: 1 0 20%;
 }
 
-/* Landscape phones and down */
-@media (max-width: 480px) {
-  .home-advert-list-item {
-    flex: 1 0 auto;
-  }
-}
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
   .home-advert-list-item {
     flex: 1 0 33%;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 580px) {
+  .home-advert-list-item {
+    flex: 1 0 50%;
   }
 }
 

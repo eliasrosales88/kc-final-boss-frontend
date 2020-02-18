@@ -19,7 +19,7 @@ export default class Advert {
         this.description = ad.description;
         this.price = ad.price;
         this.type = ad.type;
-        this.photo = ad.photo.startsWith('/images/')?`${apiUrl.replace('apiv1','')}${ad.photo}`:ad.photo;
+        this.photo = ad.photo
         this.tags = ad.tags;
     }
 

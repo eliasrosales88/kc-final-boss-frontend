@@ -20,6 +20,7 @@ const Home = props => {
 
   return (
     <Fragment>
+      <div className="home-filters"></div>
       <Divider />
       <div className="home-advert-list">
         {props.adverts.rows &&
@@ -34,6 +35,7 @@ const Home = props => {
                 type={advert.type}
                 photo={advert.photo}
                 tags={advert.tags}
+                forSale={advert.forSale}
                 createdAt={advert.createdAt}
               />
             </div>
