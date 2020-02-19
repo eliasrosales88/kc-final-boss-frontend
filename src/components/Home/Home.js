@@ -6,6 +6,7 @@ import { withSnackbar } from "notistack";
 import * as actions from "../../store/actions";
 import { getAdverts } from "../../store/selectors";
 import "./Home.css";
+import Filters from "../Filters/Filters";
 
 const Home = props => {
   const { onGetAdverts } = props;
@@ -20,7 +21,9 @@ const Home = props => {
 
   return (
     <Fragment>
-      <div className="home-filters"></div>
+      <div className="home-filters">
+        <Filters />
+      </div>
       <Divider />
       <div className="home-advert-list">
         {props.adverts.rows &&

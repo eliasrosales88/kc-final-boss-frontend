@@ -1,0 +1,91 @@
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.filters-form {
+  width: 75%;
+}
+
+.search-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 5px;
+}
+
+.search-bar {
+  background: var(--white);
+  border-radius: 5px;
+  flex: 11;
+  margin-left: 5px !important;
+  box-shadow: 0px 0px 7px -2px var(--black);
+}
+
+.search-submit {
+  flex: 1;
+  margin: 0 5px !important;
+}
+
+/*******************
+* PRICE FILTER
+********************/
+.price-filter-wrapper {
+    display: flex;
+}
+.price-filter {
+    background: var(--white);
+    border-radius: 5px;
+    margin: 0 5px !important;
+}
+
+
+
+/*******************
+* SELECT FILTER
+********************/
+.select-filter-wrapper {
+    display: flex;
+}
+.select-filter {
+    background: var(--white);
+    border-radius: 5px;
+    margin: 8px 5px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  .filters-form {
+    width: 80%;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 580px) {
+  .filters-form {
+    width: 100%;
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  .filters-form {
+    width: 75%;
+  }
+}
