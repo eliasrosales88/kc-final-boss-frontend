@@ -8,7 +8,7 @@ import UserMenu from "../UserMenu/UserMenu";
 import AuthMenu from "../AuthMenu/AuthMenu";
 
 const Header = props => {
-  console.log(props);
+  // console.log(props);
 
   return (
     <AppBar position="static" className="header-main">

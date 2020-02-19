@@ -19,7 +19,7 @@ const Auth = props => {
 
   let authMethod = props.location.pathname;
 
-  console.log(props);
+  // console.log(props);
 
   const onSubmit = (data, e) => {
     e.preventDefault();

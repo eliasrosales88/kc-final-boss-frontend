@@ -10,8 +10,6 @@ import Home from "../Home/Home";
 
 const App = (props) => {
 
-  console.log(props);
-  
   return (
     <Fragment>
       <ErrorBoundary>

@@ -8,7 +8,7 @@ import * as actions from "../../store/actions";
 const AuthMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  console.log(props);
+  // console.log(props);
   
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
