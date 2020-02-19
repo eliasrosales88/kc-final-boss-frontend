@@ -7,12 +7,16 @@ import * as actions from "../../store/actions";
 import { getAdverts } from "../../store/selectors";
 import "./Home.css";
 import Filters from "../Filters/Filters";
-
+const defaultGetAdvertsParams = {
+  limit: "8",
+  sort: "",
+  includeTotal: "true"
+}
 const Home = props => {
   const { onGetAdverts } = props;
 
   const getAdverts = useCallback(() => {
-    onGetAdverts();
+    onGetAdverts(defaultGetAdvertsParams);
   }, [onGetAdverts]);
 
   useEffect(() => {
@@ -59,8 +63,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAdverts: (filters, otherParams) =>
-      dispatch(actions.getAdverts(filters, otherParams))
+    onGetAdverts: (params) =>
+      dispatch(actions.getAdverts(params))
   };
 };
 

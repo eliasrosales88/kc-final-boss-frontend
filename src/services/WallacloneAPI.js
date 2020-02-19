@@ -1,11 +1,11 @@
-import Axios from 'axios';
+import Axios from "axios";
 
 const Wallaclone = API_URL => {
   return {
     /**
      * Registration
      */
-    postRegistration: async (data) => {
+    postRegistration: async data => {
       try {
         // Endpoint
         let baseURL = `${API_URL}/register`;
@@ -13,7 +13,6 @@ const Wallaclone = API_URL => {
         let postResponse = await Axios.post(baseURL, data);
 
         return postResponse;
-      
       } catch (error) {
         throw new Error(error);
       }
@@ -22,7 +21,7 @@ const Wallaclone = API_URL => {
     /**
      * Auth
      */
-    postAuth: async (data) => {
+    postAuth: async data => {
       try {
         // Endpoint
         let baseURL = `${API_URL}/authenticate`;
@@ -30,7 +29,6 @@ const Wallaclone = API_URL => {
         let postResponse = await Axios.post(baseURL, data);
 
         return postResponse;
-      
       } catch (error) {
         throw new Error(error);
       }
@@ -39,21 +37,20 @@ const Wallaclone = API_URL => {
     /**
      * Get Adverts
      */
-    getAdverts: async (filters, otherParams) => {
+    getAdverts: async (params) => {
       try {
         // Endpoint
         let baseURL = `${API_URL}/adverts`;
         // Call endpoint and return
-        let getResponse = await Axios.get(baseURL, {filters, otherParams});
+        let getResponse = await Axios.get(baseURL, {
+          params,
+        });
 
         return getResponse;
-      
       } catch (error) {
         throw new Error(error);
       }
     }
-
-   
   };
 };
 

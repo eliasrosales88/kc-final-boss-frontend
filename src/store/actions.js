@@ -127,7 +127,7 @@ export const advertsFail = error => ({
 });
 
 
-export const getAdverts = (filters, otherParams) => async (
+export const getAdverts = (params) => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
@@ -137,7 +137,7 @@ export const getAdverts = (filters, otherParams) => async (
   dispatch(advertsRequest());
   try {
     const { apiUrl } = getSession(state);
-    const advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(filters, otherParams);
+    const advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
     console.log('advertsDataResponse', advertsDataResponse);
     
     if (advertsDataResponse.data.ok) {
@@ -146,6 +146,48 @@ export const getAdverts = (filters, otherParams) => async (
 
   } catch (error) {
     dispatch(advertsFail(error));
+  }
+};
+
+
+
+/**********************
+ *  GET ADVERTS
+ **********************/
+export const tagsRequest = () => ({
+  type: types.TAGS_REQUEST
+});
+
+export const tagsSuccessfull = tagsData => ({
+  type: types.TAGS_SUCCESSFUL,
+  tagsData
+});
+
+export const tagsFail = error => ({
+  type: types.TAGS_FAIL,
+  error
+});
+
+
+export const getTags = (params) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+
+  const state = getState();
+  dispatch(tagsRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const tagsDataResponse = await WallacloneAPI(apiUrl).getTags(params);
+    console.log('tagsDataResponse', tagsDataResponse);
+    
+    if (tagsDataResponse.data.ok) {
+      dispatch(tagsSuccessfull(tagsDataResponse.data));
+    }
+
+  } catch (error) {
+    dispatch(tagsFail(error));
   }
 };
 

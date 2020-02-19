@@ -38,6 +38,7 @@
     background: var(--white);
     border-radius: 5px;
     margin: 0 5px !important;
+    flex: 1;
 }
 
 
@@ -47,6 +48,7 @@
 ********************/
 .select-filter-wrapper {
     display: flex;
+    flex-direction: column;
 }
 .select-filter {
     background: var(--white);

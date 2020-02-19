@@ -10,12 +10,16 @@ export const userNotAllowed = state => state.auth.notAllowed;
  *  SESSION SELECTORS 
  **********************/
 export const getSession = state => state.session;
-export const getTags = state => state.tags;
 
 /**********************
  *  ADVERT SELECTORS 
  **********************/
 export const getAdverts = state => state.adverts;
+
+/**********************
+ *  TAGS SELECTORS 
+ **********************/
+export const getTags = state => state.tags;
 
 
 /**********************

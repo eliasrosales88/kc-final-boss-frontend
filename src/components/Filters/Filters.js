@@ -11,6 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Collapse from "@material-ui/core/Collapse";
 
 import "./Filters.css";
+import { getTags } from "../../store/selectors";
 
 
 
@@ -134,6 +135,13 @@ const Filters = props => {
                       </MenuItem>
                     ))}
                   </TextField>
+                  <Button
+              type="submit"
+              variant="contained"
+              className="btn-accent search-submit"
+            >
+              Apply filters
+            </Button>
                 </div>
               </Fragment>
             </Collapse>
@@ -146,16 +154,17 @@ const Filters = props => {
 
 const mapStateToProps = state => {
   return {
-    // session: getSession(state),
-    // notAuth: userNotAllowed(state),
-    // notAllowedMessage: getAuthMessage(state),
-    // filters: getAuth(state)
+    tags: getTags(state),
+    // forSale: getForSale(state),
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onRegisterSubmit: val => dispatch(actions.userRegister(val)),
-    onLoginSubmit: val => dispatch(actions.userLogin(val))
+    onGetTags: () =>
+      dispatch(actions.getTags()),
+    // onGetForSale: () =>
+    //   dispatch(actions.getForSale()),
+
   };
 };
 
