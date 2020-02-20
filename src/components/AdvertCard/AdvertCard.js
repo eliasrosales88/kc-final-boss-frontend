@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import "./AdvertCard.css";
 
 
@@ -42,6 +42,10 @@ const AdvertCard = props => {
         <Typography variant="body2" color="textSecondary" component="p">
           {description}
         </Typography>
+      <div className="advert-card-price">{price}</div>
+      <div className="advert-card-price">{tags.map((tag, i) => 
+        <Chip key={i} label={tag} />
+        )}</div>
       </CardContent>
       <CardActions disableSpacing>
         <Button variant="contained" className="btn-accent">Detail</Button>

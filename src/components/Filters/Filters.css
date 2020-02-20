@@ -44,6 +44,42 @@
 
 
 /*******************
+* TAG FILTER
+********************/
+.tag-filter-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.tag-filter {
+  background: var(--white);
+  border-radius: 5px;
+  margin: 8px 5px !important;
+}
+
+.tag-filter-helper {
+  color: rgba(0, 0, 0, 0.54);
+  margin: 0;
+  font-size: 0.75rem;
+  margin-top: 0px;
+  min-height: 1em;
+  text-align: left;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: 0.03333em;
+}
+
+/*******************
+* TAG CHIP LIST
+********************/
+.filters-tag-chips {
+  display: flex;
+}
+
+
+
+
+/*******************
 * SELECT FILTER
 ********************/
 .select-filter-wrapper {

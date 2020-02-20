@@ -39,7 +39,7 @@ const Home = props => {
   return (
     <Fragment>
       <div className="home-filters">
-        <Filters />
+        <Filters defaultGetAdvertsParams={defaultGetAdvertsParams} />
       </div>
       <Divider />
       <Pagination
