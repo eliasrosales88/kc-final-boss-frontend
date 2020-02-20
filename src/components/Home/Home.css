@@ -1,6 +1,26 @@
 .home-container {
 }
 
+.home-paginator {
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+}
+.home-paginator li button {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.home-paginator li button:hover {
+  background: var(--accent-light);
+}
+.home-paginator li button.Mui-selected {
+  background: var(--primary);
+  color: var(--white);
+}
+
+
+
 .home-filters {
   margin-bottom: 10px;
 }

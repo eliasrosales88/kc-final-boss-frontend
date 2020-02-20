@@ -19,9 +19,11 @@ const AdvertCard = props => {
     photo,
     tags,
     createdAt,
+    updatedAt,
     forSale
   } = props;
 
+  let date = new Date(updatedAt).toUTCString();
   
   return (
     <Card>
@@ -32,7 +34,7 @@ const AdvertCard = props => {
           </Avatar>
         }
         title={name}
-        subheader={createdAt}
+        subheader={date}
       />
       <CardMedia className="advert-card-media" image={photo} title={name} />
       {/* <img src={photo} alt={name} /> */}

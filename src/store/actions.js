@@ -141,6 +141,11 @@ export const getAdverts = (params) => async (
     console.log('advertsDataResponse', advertsDataResponse);
     
     if (advertsDataResponse.data.ok) {
+      const paginatorCount = Math.ceil(advertsDataResponse.data.result.total/params.limit);
+      console.log("paginatorCount", paginatorCount);
+      advertsDataResponse.data.result.paginatorCount = paginatorCount;
+      // advertsDataResponse.data.result.rows = advertsDataResponse.data.result.rows.reverse();
+
       dispatch(advertsSuccessfull(advertsDataResponse.data));
     }
 
@@ -152,7 +157,7 @@ export const getAdverts = (params) => async (
 
 
 /**********************
- *  GET ADVERTS
+ *  GET TAGS
  **********************/
 export const tagsRequest = () => ({
   type: types.TAGS_REQUEST
