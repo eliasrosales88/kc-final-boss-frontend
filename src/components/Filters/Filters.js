@@ -11,24 +11,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Collapse from "@material-ui/core/Collapse";
 
 import Chip from "@material-ui/core/Chip";
-import { makeStyles } from "@material-ui/core/styles";
 
 import "./Filters.css";
 import { getTags } from "../../store/selectors";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    padding: theme.spacing(0.5)
-  },
-  chip: {
-    margin: theme.spacing(0.5)
-  }
-}));
 
 const Filters = props => {
+
   const { defaultGetAdvertsParams, onGetAdverts } = props;
   const [expanded, setExpanded] = useState(false);
   const [tag, setTag] = useState("");
@@ -40,15 +29,17 @@ const Filters = props => {
 
   const { register, handleSubmit } = useForm({});
 
-  const classes = useStyles();
+
+
+
+  /**
+   * FORM TAG INPUT
+   */
   const [chipData, setChipData] = useState([]);
-
-  const getTagNames = chipData.map(chip => (chip.label));
-
+  const getTagNames = chipData.map(chip => chip.label);
   const handleChipDelete = chipToDelete => () => {
     setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
   };
-
   const handleChipCreate = chipToCreate => {
     const { value } = chipToCreate.target;
     setTag(value);
@@ -68,48 +59,46 @@ const Filters = props => {
     }
   };
 
-  const currencies = [
-    {
-      value: "USD",
-      label: "$"
-    },
-    {
-      value: "EUR",
-      label: "€"
-    },
-    {
-      value: "BTC",
-      label: "฿"
-    },
-    {
-      value: "JPY",
-      label: "¥"
-    }
-  ];
-  const [currency, setCurrency] = useState("EUR");
+
+
+
+  /**
+   * FORM FOR SALE SELECT
+   */
+  const forSaleValues = ["true", "false"];
+  const [forSale, setForSale] = useState("true");
   const handleSelectChange = event => {
-    setCurrency(event.target.value);
+    setForSale(event.target.value);
   };
 
+
+
+  /**
+   * On submit form
+   * @param {*} data Form data
+   * @param {*} e event
+   */
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log("DATA", data);
-    
     let name = data.search;
     let minPrice = data.minPrice;
     let maxPrice = data.maxPrice;
     let price = `${minPrice}-${maxPrice}`;
     let tags = getTagNames;
-    console.log("TAGS", tags);
+    let forSale = data.forSale;
 
+
+    /**
+     * Call to action and filter Adverts
+     */
     onGetAdverts({
       ...defaultGetAdvertsParams,
       name,
       price,
-      tags
+      tags,
+      forSale
     });
   };
-
 
   return (
     <Fragment>
@@ -189,27 +178,39 @@ const Filters = props => {
                             ? undefined
                             : handleChipDelete(data)
                         }
-                        className={classes.chip}
                       />
                     );
                   })}
                 </div>
                 <div className="select-filter-wrapper">
                   <TextField
-                    id="for-sale"
+                    id="forSale"
                     select
                     label="For sale"
-                    value={currency}
+                    value={forSale}
                     onChange={handleSelectChange}
                     variant="outlined"
                     className="select-filter"
+                    name="forSale"
+                    SelectProps={{
+                      native: false,
+                      name: "forSale"
+                    }}
+                    // inputProps={{ name: 'forSale' }}
+                    inputRef={register}
                   >
-                    {currencies.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    {forSaleValues.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
                       </MenuItem>
                     ))}
                   </TextField>
+                  <input
+                    type="hidden"
+                    ref={register}
+                    name="forSale"
+                    value={forSale}
+                  />
                   <Button
                     type="submit"
                     variant="contained"
@@ -230,16 +231,11 @@ const Filters = props => {
 const mapStateToProps = state => {
   return {
     tags: getTags(state)
-    // forSale: getForSale(state),
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onGetAdverts: params => dispatch(actions.getAdverts(params))
-    // onGetTags: () =>
-    //   dispatch(actions.getTags()),
-    // onGetForSale: () =>
-    //   dispatch(actions.getForSale()),
   };
 };
 
