@@ -50,9 +50,8 @@ const AdvertCard = props => {
             <div>{`Last update: ${advertDate}`}</div>
             <div className='sub-info'>
             <span>By: </span><div className='owner'>{`${owner}`}</div>
-            <div className="price">$ {price}</div>
-
             </div>
+            <div className="price">$ {price}</div>
           </div>
         }
       />
@@ -63,7 +62,7 @@ const AdvertCard = props => {
         <Typography gutterBottom variant="h6" component="h2">
           Description
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="p" className='truncate'>
           {description}
         </Typography>
         <div className="advert-card-tags">

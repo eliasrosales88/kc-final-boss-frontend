@@ -28,16 +28,17 @@
 .sub-info {
   display: flex;
 }
-.sub-info .price {
-  flex: 5;
+.price {
+  /* width: 50%; */
   font-size: 1rem;
   display: flex;
   justify-content: center;
+  align-content: flex-end;
   font-size: 1.5rem;
   background: var(--accent);
   margin: 5px 0;
-  margin-left: 5%;
-  border-radius: 10px 0px 0px 10px;
+  /* margin-left: 5%; */
+  border-radius: 5px 0px 0px 5px;
   color: var(--white);
 }
 
@@ -53,3 +54,9 @@
   cursor: pointer;
 }
 
+.truncate {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
