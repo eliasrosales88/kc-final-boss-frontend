@@ -55,7 +55,7 @@ const Home = props => {
       <div className="home-advert-list">
         {props.adverts.rows &&
           props.adverts.rows.map(advert => (
-            <div className="home-advert-list-item" key={advert._id}>
+            <div key={advert._id}>
               <AdvertCard
                 id={advert._id}
                 name={advert.name}
@@ -67,6 +67,7 @@ const Home = props => {
                 forSale={advert.forSale}
                 createdAt={advert.createdAt}
                 updatedAt={advert.updatedAt}
+                owner={advert.owner}
               />
             </div>
           ))}

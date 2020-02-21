@@ -19,47 +19,37 @@
   color: var(--white);
 }
 
-
-
 .home-filters {
   margin-bottom: 10px;
 }
 
 .home-advert-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 33.33% 33.33% 33.33%;
+  grid-template-rows: auto auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
 }
 
-.home-advert-list-item {
-  margin: 10px;
-  flex: 1 0 20%;
-}
 
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
-  .home-advert-list-item {
-    flex: 1 0 33%;
+  .home-advert-list {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
   }
 }
 
 /* Landscape phones and down */
 @media (max-width: 580px) {
-  .home-advert-list-item {
-    flex: 1 0 50%;
+  .home-advert-list {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
   }
 }
 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-  .home-advert-list-item {
-    flex: 1 0 33%;
-  }
-}
-
-/* Large desktop */
-/* @media (min-width: 1200px) {
-    .home-advert-list-item {
-        flex: 1 0 20%;
-      }
-} */

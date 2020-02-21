@@ -196,7 +196,6 @@ const Filters = props => {
                       native: false,
                       name: "forSale"
                     }}
-                    // inputProps={{ name: 'forSale' }}
                     inputRef={register}
                   >
                     {forSaleValues.map((option, i) => (

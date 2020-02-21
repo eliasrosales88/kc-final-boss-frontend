@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import { Button, Chip } from "@material-ui/core";
 import "./AdvertCard.css";
 
-
 const AdvertCard = props => {
   const {
     name,
@@ -20,35 +19,63 @@ const AdvertCard = props => {
     tags,
     createdAt,
     updatedAt,
-    forSale
+    forSale,
+    owner
   } = props;
 
-  let date = new Date(updatedAt).toUTCString();
-  
+  const convertDate = updatedAt => {
+    let dateToConvert = new Date(updatedAt).toLocaleTimeString();
+    return `${dateToConvert}`;
+  };
+
+  let advertDate = convertDate(updatedAt);
+
   return (
     <Card>
       <CardHeader
+        titleTypographyProps={{ variant: "h6" }}
+        className="advert-card-header"
         avatar={
-          <Avatar aria-label="recipe">
-            {forSale ? <Fragment>Sale</Fragment> : <Fragment>Buy</Fragment>}
+          <Avatar className="advert-card-for-sale" aria-label="for-sale">
+            {forSale ? (
+              <span className="sale">Sale</span>
+            ) : (
+              <span className="buy">Buy</span>
+            )}
           </Avatar>
         }
         title={name}
-        subheader={date}
+        subheader={
+          <div  className="advert-card-info">
+            <div>{`Last update: ${advertDate}`}</div>
+            <div className='sub-info'>
+            <span>By: </span><div className='owner'>{`${owner}`}</div>
+            <div className="price">$ {price}</div>
+
+            </div>
+          </div>
+        }
       />
+
       <CardMedia className="advert-card-media" image={photo} title={name} />
       {/* <img src={photo} alt={name} /> */}
       <CardContent>
+        <Typography gutterBottom variant="h6" component="h2">
+          Description
+        </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {description}
         </Typography>
-      <div className="advert-card-price">{price}</div>
-      <div className="advert-card-price">{tags.map((tag, i) => 
-        <Chip key={i} label={tag} />
-        )}</div>
+        <div className="advert-card-tags">
+          {tags.map((tag, i) => (
+            <Chip key={i} label={tag} />
+          ))}
+        </div>
       </CardContent>
       <CardActions disableSpacing>
-        <Button variant="contained" className="btn-accent">Detail</Button>
+        <Button variant="contained" className="btn-accent">
+          Detail
+        </Button>
       </CardActions>
     </Card>
   );

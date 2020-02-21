@@ -1,3 +1,55 @@
-.advert-card-media {
-    height: 60px;
+.advert-card-header {
+  padding-bottom: 0 !important;
+  padding-right: 0 !important;
 }
+
+.advert-card-for-sale {
+  box-shadow: 0px 0px 2px 1px var(--black);
+}
+.advert-card-for-sale .sale,
+.advert-card-for-sale .buy {
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.advert-card-for-sale .sale {
+  background: var(--danger);
+  width: 100%;
+  height: 100%;
+}
+.advert-card-for-sale .buy {
+  background: var(--primary);
+  width: 100%;
+  height: 100%;
+}
+
+.sub-info {
+  display: flex;
+}
+.sub-info .price {
+  flex: 5;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--accent);
+  margin: 5px 0;
+  margin-left: 5%;
+  border-radius: 10px 0px 0px 10px;
+  color: var(--white);
+}
+
+.advert-card-media {
+  height: 240px;
+}
+
+.advert-card-info .owner {
+  display: inline-block;
+}
+.advert-card-info .owner:hover {
+  color: var(--accent);
+  cursor: pointer;
+}
+
