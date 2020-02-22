@@ -153,6 +153,44 @@ export const getAdverts = (params) => async (
     dispatch(advertsFail(error));
   }
 };
+/**********************
+ *  GET ADVERT
+ **********************/
+export const advertRequest = () => ({
+  type: types.ADVERT_REQUEST
+});
+
+export const advertSuccessfull = advertData => ({
+  type: types.ADVERT_SUCCESSFUL,
+  advertData
+});
+
+export const advertFail = error => ({
+  type: types.ADVERT_FAIL,
+  error
+});
+
+
+export const getAdvert = (id) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+
+  const state = getState();
+  dispatch(advertRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const advertDataResponse = await WallacloneAPI(apiUrl).getAdvert(id);
+    console.log('advertDataResponse', advertDataResponse);    
+    if (advertDataResponse.data.ok) {
+      dispatch(advertSuccessfull(advertDataResponse.data));
+    }
+
+  } catch (error) {
+    dispatch(advertFail(error));
+  }
+};
 
 
 
@@ -205,4 +243,11 @@ export const routeRegister = () => (dispatch, getState, { history }) => {
 
 export const routeLogin = () => (dispatch, getState, { history }) => {
   history.push("/login");
+};
+
+export const routeHome = () => (dispatch, getState, { history }) => {
+  history.push("/");
+};
+export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
+  history.push("/advert/"+ advert.name +"_id__"+ advert.id);
 };

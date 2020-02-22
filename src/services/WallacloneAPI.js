@@ -50,6 +50,23 @@ const Wallaclone = API_URL => {
       } catch (error) {
         throw new Error(error);
       }
+    },
+    /**
+     * Get Advert
+     */
+    getAdvert: async (id) => {
+      try {
+        // Endpoint
+        let baseURL = `${API_URL}/advert`;
+        // Call endpoint and return
+        console.log("api", id);
+        
+        let getResponse = await Axios.get(baseURL, {params:{_id: id}});
+
+        return getResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
     }
   };
 };

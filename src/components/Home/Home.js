@@ -87,10 +87,6 @@ const Home = props => {
 
 const mapStateToProps = state => {
   return {
-    // session: getSession(state),
-    // notAuth: userNotAllowed(state),
-    // notAllowedMessage: getAuthMessage(state),
-    // auth: getAuth(state)
     adverts: getAdverts(state),
     paginatorCount: getPaginatorCount(state)
   };

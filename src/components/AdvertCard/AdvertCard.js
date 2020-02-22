@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -7,14 +7,17 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { Button, Chip } from "@material-ui/core";
+import * as actions from "../../store/actions";
 import "./AdvertCard.css";
+import { connect } from "react-redux";
 
 const AdvertCard = props => {
+  const {onRouteAdvertDetail} = props;
   const {
+    id,
     name,
     description,
     price,
-    type,
     photo,
     tags,
     createdAt,
@@ -72,7 +75,7 @@ const AdvertCard = props => {
         </div>
       </CardContent>
       <CardActions disableSpacing>
-        <Button variant="contained" className="btn-accent">
+        <Button variant="contained" className="btn-accent" onClick={() => onRouteAdvertDetail(name, id)}>
           Detail
         </Button>
       </CardActions>
@@ -80,4 +83,16 @@ const AdvertCard = props => {
   );
 };
 
-export default AdvertCard;
+const mapStateToProps = state => {
+  return {
+    // adverts: getAdverts(state),
+    // paginatorCount: getPaginatorCount(state)
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onRouteAdvertDetail: (name, id) => dispatch(actions.routeAdvertDetail({name, id}))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdvertCard);

@@ -5,6 +5,7 @@ import ErrorBoundary from "../ErrorBoundary";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Auth from "../Auth/Auth";
 import Home from "../Home/Home";
+import AdvertDetail from "../AdvertDetail/AdvertDetail";
 
 
 
@@ -21,10 +22,10 @@ const App = (props) => {
             <Route path="/register" exact component={Auth} />
             <Route path="/login" exact component={Auth} />
             <Route path="/" exact component={Home} />
+            <Route path="/advert/:id" exact component={AdvertDetail} />
             {/* <PrivateRoute path="/profile" exact component={Profile} />
      <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
      <PrivateRoute path="/advert/:id/edit" exact component={AdvertEdit} />
-     <PrivateRoute path="/advert/:id" exact component={AdvertDetail} />
      <PrivateRoute component={Error404} /> */}
           </Switch>
         </Layout>
