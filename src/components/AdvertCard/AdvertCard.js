@@ -12,9 +12,10 @@ import { TwitterShareButton } from "react-twitter-embed";
 
 import "./AdvertCard.css";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const AdvertCard = props => {
-  const { onRouteAdvertDetail, onRouteUserPublic } = props;
+  const { onRouteAdvertDetail, onRouteUserPublic, match } = props;
   const {
     id,
     name,
@@ -60,7 +61,7 @@ const AdvertCard = props => {
           <div className="advert-card-info">
             <div className='date'>{`Last update: ${advertDate}`}</div>
             <div className="sub-info">
-              {owner !== undefined && 
+              {!match.params.username && 
                 <Fragment>
                   <span>By: </span>
                   <div className="owner"onClick={() => onRouteUserPublic(owner)}>{`${owner}`}</div>
@@ -122,4 +123,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvertCard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdvertCard));
