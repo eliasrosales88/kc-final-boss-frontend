@@ -37,9 +37,10 @@ const AdvertDetail = props => {
           {name}
           </h2>
         </div>
-          <div className='advert-detail-for-sale'>Articulo: {forSale ? "En venta" : "Se busca"}</div>
         <div className='advert-detail-info'>
           <div className='price'>${price}</div>
+          <span>Advert: </span><div className='for-sale'>{forSale ? "For Sale" : "Buy"}</div>
+          <br />
           <span>By: </span><div className='owner'>{owner}</div>
         </div>
         <div className='advert-detail-description'>
