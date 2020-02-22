@@ -1,0 +1,8 @@
+.error-container {
+  display: flex;
+  justify-content: center;
+  height: 70vh;
+}
+.error {
+  width: 100%;
+}

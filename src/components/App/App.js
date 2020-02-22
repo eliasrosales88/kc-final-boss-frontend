@@ -7,17 +7,17 @@ import Auth from "../Auth/Auth";
 import Home from "../Home/Home";
 import AdvertDetail from "../AdvertDetail/AdvertDetail";
 import UserPublic from "../UserPublic/UserPublic";
+import Account from "../Account/Account";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Error404 from "../Error404/Error404";
 
-
-
-const App = (props) => {
-
+const App = props => {
   return (
     <Fragment>
       <ErrorBoundary>
         <Layout
           mainContainerClassName="main-container"
-          sectionTitle= {titleHandler(props.location.pathname)}
+          sectionTitle={titleHandler(props.location.pathname)}
         >
           <Switch>
             <Route path="/register" exact component={Auth} />
@@ -25,10 +25,15 @@ const App = (props) => {
             <Route path="/" exact component={Home} />
             <Route path="/advert/:id" exact component={AdvertDetail} />
             <Route path="/user/:username" exact component={UserPublic} />
-            {/* <PrivateRoute path="/profile" exact component={Profile} />
-     <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
-     <PrivateRoute path="/advert/:id/edit" exact component={AdvertEdit} />
-     <PrivateRoute component={Error404} /> */}
+            <PrivateRoute path="/account" exact component={Account} />
+            <Route component={Error404} />
+            {/* <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
+            <PrivateRoute
+              path="/advert/:id/edit"
+              exact
+              component={AdvertEdit}
+            />
+            <PrivateRoute component={Error404} /> */}
           </Switch>
         </Layout>
       </ErrorBoundary>
@@ -36,16 +41,18 @@ const App = (props) => {
   );
 };
 
-const titleHandler = (key) => {
+const titleHandler = key => {
   switch (key) {
     case "/register":
-      return "Register"
+      return "Register";
     case "/login":
-      return "Login"
-  
+      return "Login";
+    case "/account":
+      return "Account";
+
     default:
       return "";
   }
-}
+};
 
 export default withRouter(App);

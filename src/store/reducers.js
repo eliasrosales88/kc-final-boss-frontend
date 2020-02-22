@@ -7,6 +7,7 @@ const defaultState = {
   session: new Session(),
   adverts: {},
   advert: {},
+  user: {},
   tags: [],
   ui: {}
 };
@@ -94,6 +95,28 @@ export const advert = (state = defaultState.advert, action) => {
         return {
           ...state,
           ...action.advertData.result
+        };
+  
+      case types.ADVERT_FAIL:
+        return action.error;
+  
+
+    default:
+      return state;
+  }
+};
+
+export const user = (state = defaultState.user, action) => {
+  switch (action.type) {
+    case types.ADVERT_REQUEST:
+      return { 
+        ...state, 
+      };
+
+      case types.ADVERT_SUCCESSFUL:
+        return {
+          ...state,
+          ...action.userData.result
         };
   
       case types.ADVERT_FAIL:

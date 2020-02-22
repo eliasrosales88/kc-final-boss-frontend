@@ -4,8 +4,8 @@ import AdvertCard from "../AdvertCard/AdvertCard";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import * as actions from "../../store/actions";
-import { getAdverts, getPaginatorCount, getUser } from "../../store/selectors";
-import "./UserPublic.css";
+import { getAdverts, getPaginatorCount } from "../../store/selectors";
+import "./Account.css";
 import Filters from "../Filters/Filters";
 import Pagination from "@material-ui/lab/Pagination";
 
@@ -14,9 +14,9 @@ const defaultGetAdvertsParams = {
   sort: ["updatedAt", -1], //Default filter by newest
   includeTotal: "true"
 };
-const UserPublic = props => {
+const Account = props => {
   console.log(props);
-  const { onGetAdverts, paginatorCount, match, onGetUser } = props;
+  const { onGetAdverts, paginatorCount, match } = props;
 
   const owner = match.params.username;
   
@@ -27,16 +27,6 @@ const UserPublic = props => {
   useEffect(() => {
     getAdverts();
   }, [getAdverts]);
-
-  const getUser = useCallback(() => {
-    onGetUser(owner);
-  }, [owner, onGetUser]);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
-
- 
 
   const [page, setPage] = React.useState(1);
   const handlePaginatorChange = (event, value) => {
@@ -102,15 +92,13 @@ const UserPublic = props => {
 const mapStateToProps = state => {
   return {
     adverts: getAdverts(state),
-    paginatorCount: getPaginatorCount(state),
-    userFound: getUser(state)
+    paginatorCount: getPaginatorCount(state)
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAdverts: params => dispatch(actions.getAdverts(params)),
-    onGetUser: user => dispatch(actions.getUser(user))
+    onGetAdverts: params => dispatch(actions.getAdverts(params))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withSnackbar(UserPublic));
+export default connect(mapStateToProps, mapDispatchToProps)(withSnackbar(Account));

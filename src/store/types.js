@@ -15,6 +15,10 @@ export const ADVERT_REQUEST = 'ADVERT_REQUEST';
 export const ADVERT_SUCCESSFUL = 'ADVERT_SUCCESSFUL';
 export const ADVERT_FAIL = 'ADVERT_FAIL';
 
+export const USER_REQUEST = 'USER_REQUEST';
+export const USER_SUCCESSFUL = 'USER_SUCCESSFUL';
+export const USER_FAIL = 'USER_FAIL';
+
 export const TAGS_REQUEST = 'TAGS_REQUEST';
 export const TAGS_SUCCESSFUL = 'TAGS_SUCCESSFUL';
 export const TAGS_FAIL = 'TAGS_FAIL';

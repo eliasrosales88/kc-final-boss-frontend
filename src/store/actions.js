@@ -196,6 +196,46 @@ export const getAdvert = (id) => async (
 };
 
 
+/**********************
+ *  GET USER
+ **********************/
+export const userRequest = () => ({
+  type: types.USER_REQUEST
+});
+
+export const userSuccessfull = userData => ({
+  type: types.USER_SUCCESSFUL,
+  userData
+});
+
+export const userFail = error => ({
+  type: types.USER_FAIL,
+  error
+});
+
+
+export const getUser = (id) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+
+  const state = getState();
+  dispatch(userRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const userDataResponse = await WallacloneAPI(apiUrl).getUser(id);
+    console.log('userDataResponse', userDataResponse);    
+    if (userDataResponse.data.ok) {
+      dispatch(userSuccessfull(userDataResponse.data));
+    }
+
+  } catch (error) {
+    dispatch(userFail(error));
+  }
+};
+
+
 
 /**********************
  *  GET TAGS
@@ -249,10 +289,15 @@ export const routeLogin = () => (dispatch, getState, { history }) => {
 };
 
 export const routeHome = () => (dispatch, getState, { history }) => {
-  setTimeout(()=>{
     history.push("/");
-  },1200)
 };
+
+export const routeAcount = () => (dispatch, getState, { history }) => {
+    history.push("/account");
+};
+
+
+
 export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
   history.push("/advert/"+ advert.name +"_id__"+ advert.id);
   dispatch(getAdvert(advert.id));

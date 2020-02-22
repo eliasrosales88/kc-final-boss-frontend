@@ -8,6 +8,7 @@ import * as actions from "../../store/actions";
 
 const UserMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {onUserLogout, onRouteAccount} = props;
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -16,6 +17,16 @@ const UserMenu = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    onUserLogout();
+    handleClose();
+  }
+
+  const handleAccount = () => {
+    onRouteAccount();
+    handleClose();
+  }
 
   return (
     <Fragment>
@@ -39,8 +50,8 @@ const UserMenu = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Account</MenuItem>
-        <MenuItem onClick={props.onUserLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleAccount}>Account</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </Fragment>
   );
@@ -53,7 +64,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onUserLogout: () => dispatch(actions.userLogout())
+    onUserLogout: () => dispatch(actions.userLogout()),
+    onRouteAccount: () => dispatch(actions.routeAcount())
   };
 };
 

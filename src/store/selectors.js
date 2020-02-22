@@ -4,6 +4,7 @@
 export const getAuth = state => state.auth;
 export const getAuthMessage = state => state.auth.message;
 export const userNotAllowed = state => state.auth.notAllowed;
+export const getToken = state => state.auth.token;
 
 
 /**********************
@@ -19,6 +20,11 @@ export const getPaginatorCount = state => state.adverts.paginatorCount
 export const getAdvert = state => state.advert;
 
 /**********************
+ *  USER SELECTORS 
+ **********************/
+export const getUser = state => state.user;
+
+ /**********************
  *  TAGS SELECTORS 
  **********************/
 export const getTags = state => state.tags;
