@@ -250,4 +250,5 @@ export const routeHome = () => (dispatch, getState, { history }) => {
 };
 export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
   history.push("/advert/"+ advert.name +"_id__"+ advert.id);
+  dispatch(getAdvert(advert.id));
 };

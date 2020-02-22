@@ -8,11 +8,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { Button, Chip } from "@material-ui/core";
 import * as actions from "../../store/actions";
+import { TwitterShareButton } from "react-twitter-embed";
+
 import "./AdvertCard.css";
 import { connect } from "react-redux";
 
 const AdvertCard = props => {
-  const {onRouteAdvertDetail} = props;
+  const { onRouteAdvertDetail } = props;
   const {
     id,
     name,
@@ -20,11 +22,14 @@ const AdvertCard = props => {
     price,
     photo,
     tags,
-    createdAt,
     updatedAt,
     forSale,
-    owner
+    owner,
   } = props;
+
+  let urlName = name.replace(/\s/g, "%20");
+  console.log("urlName", urlName);
+  
 
   const convertDate = updatedAt => {
     let dateToConvert = new Date(updatedAt).toLocaleTimeString();
@@ -49,10 +54,11 @@ const AdvertCard = props => {
         }
         title={name}
         subheader={
-          <div  className="advert-card-info">
+          <div className="advert-card-info">
             <div>{`Last update: ${advertDate}`}</div>
-            <div className='sub-info'>
-            <span>By: </span><div className='owner'>{`${owner}`}</div>
+            <div className="sub-info">
+              <span>By: </span>
+              <div className="owner">{`${owner}`}</div>
             </div>
             <div className="price">$ {price}</div>
           </div>
@@ -65,7 +71,12 @@ const AdvertCard = props => {
         <Typography gutterBottom variant="h6" component="h2">
           Description
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p" className='truncate'>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          className="truncate"
+        >
           {description}
         </Typography>
         <div className="advert-card-tags">
@@ -74,10 +85,18 @@ const AdvertCard = props => {
           ))}
         </div>
       </CardContent>
-      <CardActions disableSpacing>
-        <Button variant="contained" className="btn-accent" onClick={() => onRouteAdvertDetail(name, id)}>
+      <CardActions className='advert-card-actions'>
+        <Button
+          variant="contained"
+          className="btn-accent"
+          onClick={() => onRouteAdvertDetail(name, id)}
+        >
           Detail
         </Button>
+        <TwitterShareButton
+          url={`${window.location.href}advert/${urlName}_id__${id}`}
+          options={{ text: "#wallaclone" + name, via: "wallaclone" }}
+        />
       </CardActions>
     </Card>
   );
@@ -85,13 +104,12 @@ const AdvertCard = props => {
 
 const mapStateToProps = state => {
   return {
-    // adverts: getAdverts(state),
-    // paginatorCount: getPaginatorCount(state)
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onRouteAdvertDetail: (name, id) => dispatch(actions.routeAdvertDetail({name, id}))
+    onRouteAdvertDetail: (name, id) =>
+      dispatch(actions.routeAdvertDetail({ name, id }))
   };
 };
 

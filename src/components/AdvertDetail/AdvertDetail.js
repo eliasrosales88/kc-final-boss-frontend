@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
-import { getAdverts, getAdvert } from "../../store/selectors";
+import { getAdvert } from "../../store/selectors";
 import "./AdvertDetail.css";
 import { Typography } from "@material-ui/core";
+import { TwitterShareButton } from "react-twitter-embed";
 
 const getIdFromRoute = (history) => {
   let id = history.location.pathname.split("_id__");
@@ -12,8 +13,7 @@ const getIdFromRoute = (history) => {
 
 const AdvertDetail = props => {
   const { history, onGetAdvert, advert } = props;
-  const {_id, name, price, description, photo, owner, forSale} = advert;
-  console.log(advert.forSale);
+  const {name, price, description, photo, owner, forSale} = advert;
   
 
   let id = getIdFromRoute(history);
@@ -39,6 +39,12 @@ const AdvertDetail = props => {
         </div>
         <div className='advert-detail-info'>
           <div className='price'>${price}</div>
+          <div>
+          <TwitterShareButton
+          url={`${window.location.href}`}
+          options={{ text: "#wallaclone" + name, via: "wallaclone" }}
+        />
+          </div>
           <span>Advert: </span><div className='for-sale'>{forSale ? "For Sale" : "Buy"}</div>
           <br />
           <span>By: </span><div className='owner'>{owner}</div>

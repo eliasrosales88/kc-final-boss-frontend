@@ -54,6 +54,12 @@
   cursor: pointer;
 }
 
+.advert-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+
 .truncate {
   overflow: hidden;
   display: -webkit-box;

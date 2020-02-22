@@ -16,6 +16,7 @@ export const getSession = state => state.session;
  **********************/
 export const getAdverts = state => state.adverts;
 export const getPaginatorCount = state => state.adverts.paginatorCount
+export const getAdvert = state => state.advert;
 
 /**********************
  *  TAGS SELECTORS 
