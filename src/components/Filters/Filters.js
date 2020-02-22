@@ -70,6 +70,14 @@ const Filters = props => {
   const handleSelectChange = event => {
     setForSale(event.target.value);
   };
+  /**
+   * FORM ORDER SELECT
+   */
+  const orderValues = ["newest", "oldest"];
+  const [order, setOrder] = useState("newest");
+  const handleOrderSelectChange = event => {
+    setOrder(event.target.value);
+  };
 
 
 
@@ -93,6 +101,7 @@ const Filters = props => {
      */
     onGetAdverts({
       ...defaultGetAdvertsParams,
+      sort: order === 'oldest'? ["updatedAt", 1] : ["updatedAt", -1],
       name,
       price,
       tags,
@@ -209,6 +218,34 @@ const Filters = props => {
                     ref={register}
                     name="forSale"
                     value={forSale}
+                  />
+                  
+                  <TextField
+                    id="order"
+                    select
+                    label="Order"
+                    value={order}
+                    onChange={handleOrderSelectChange}
+                    variant="outlined"
+                    className="select-filter"
+                    name="order"
+                    SelectProps={{
+                      native: false,
+                      name: "order"
+                    }}
+                    inputRef={register}
+                  >
+                    {orderValues.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <input
+                    type="hidden"
+                    ref={register}
+                    name="order"
+                    value={order}
                   />
                   <Button
                     type="submit"

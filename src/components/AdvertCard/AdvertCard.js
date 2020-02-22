@@ -33,7 +33,10 @@ const AdvertCard = props => {
 
   const convertDate = updatedAt => {
     let dateToConvert = new Date(updatedAt).toLocaleTimeString();
-    return `${dateToConvert}`;
+    let year = new Date(updatedAt).getFullYear();
+    let month = new Date(updatedAt).getMonth();
+    let day = new Date(updatedAt).getDay();
+    return `${day}/${month}/${year} ${dateToConvert}`;
   };
 
   let advertDate = convertDate(updatedAt);

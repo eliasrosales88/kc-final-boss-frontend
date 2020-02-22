@@ -11,7 +11,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 const defaultGetAdvertsParams = {
   limit: "8",
-  sort: "updatedAt",
+  sort: ["updatedAt", -1], //Default filter by newest
   includeTotal: "true"
 };
 const Home = props => {
