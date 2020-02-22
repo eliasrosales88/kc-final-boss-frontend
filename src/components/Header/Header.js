@@ -7,12 +7,19 @@ import { getSession, getUi } from "../../store/selectors";
 import UserMenu from "../UserMenu/UserMenu";
 import AuthMenu from "../AuthMenu/AuthMenu";
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { withRouter } from "react-router-dom";
+
 const Header = props => {
-  // console.log(props);
+  const { history, match } = props;
+  const isHome = match.path === '/' && match.isExact ? true : false; 
 
   return (
     <AppBar position="static" className="header-main">
       <Toolbar>
+        { !isHome &&
+        <ArrowBackIcon className='header-back' onClick={history.goBack}></ArrowBackIcon>
+        }
         <Typography variant="h6">Wallaclone</Typography>
 
         <span className="spacer"></span>
@@ -33,4 +40,4 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

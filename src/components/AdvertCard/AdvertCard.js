@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -58,10 +58,14 @@ const AdvertCard = props => {
         title={name}
         subheader={
           <div className="advert-card-info">
-            <div>{`Last update: ${advertDate}`}</div>
+            <div className='date'>{`Last update: ${advertDate}`}</div>
             <div className="sub-info">
-              <span>By: </span>
-              <div className="owner"onClick={() => onRouteUserPublic(owner)}>{`${owner}`}</div>
+              {owner !== undefined && 
+                <Fragment>
+                  <span>By: </span>
+                  <div className="owner"onClick={() => onRouteUserPublic(owner)}>{`${owner}`}</div>
+                </Fragment>
+              }
             </div>
             <div className="price">$ {price}</div>
           </div>

@@ -3,7 +3,8 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 
-const Layout = ({mainContainerClassName, children, sectionTitle}) => (
+const Layout = ({mainContainerClassName, children, sectionTitle, props}) =>{ 
+  return (
   <Fragment>
     <header>
       <Header />
@@ -18,6 +19,6 @@ const Layout = ({mainContainerClassName, children, sectionTitle}) => (
       <Footer />
     </footer>
   </Fragment>
-);
+)};
 
 export default Layout;

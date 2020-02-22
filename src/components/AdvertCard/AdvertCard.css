@@ -53,12 +53,14 @@
   color: var(--accent);
   cursor: pointer;
 }
+.advert-card-info .date {
+  padding-right: 5px;
+}
 
 .advert-card-actions {
   display: flex;
   justify-content: space-between;
 }
-
 
 .truncate {
   overflow: hidden;
