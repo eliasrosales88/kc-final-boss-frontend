@@ -47,12 +47,6 @@ const AdvertDetail = props => {
           Description
         </Typography>
         {description}
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
-        orem ipsum dolor sit amet, consectetur adipiscing elit. Nam at nunc sodales, volutpat urna vel, congue risus. Aenean et ex vestibulum, interdum velit vel, viverra turpis. Cras nec lectus maximus, cursus lectus vel, finibus ligula.
         </div>
       </div>
     </div>
