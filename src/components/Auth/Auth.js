@@ -16,6 +16,7 @@ import { withSnackbar } from "notistack";
 
 const Auth = props => {
   const { register, handleSubmit, errors } = useForm({});
+  const { notAuth, onRegisterSubmit, onLoginSubmit } = props;
 
   let authMethod = props.location.pathname;
 
@@ -24,11 +25,10 @@ const Auth = props => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     authMethod === "/register"
-      ? props.onRegisterSubmit(data)
-      : props.onLoginSubmit(data);
+      ? onRegisterSubmit(data)
+      : onLoginSubmit(data);
   };
 
-  
 
   return (
     <Fragment>
@@ -90,10 +90,10 @@ const Auth = props => {
               "Invalid password, should have at least 8 characters"}
           </p>
           <Button type="submit" variant="contained" className="auth-button">
-            Register
+            {authMethod === "/register" ? "Register": "Login"}
           </Button>
         </form>
-        {props.notAuth && (
+        {notAuth && (
           <div className="auth-message slideInUp">
             {props.notAllowedMessage}
           </div>

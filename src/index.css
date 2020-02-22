@@ -65,42 +65,46 @@ code {
 * ANIMATIONS
 **************/
 @-webkit-keyframes slideInUp {
-  from {
+  0%, 100% {
     -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
     visibility: hidden;
     opacity: 0;
   }
 
-  to {
+  50% {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    visibility: visible !important;
+    visibility: visible;
     opacity: 1;
   }
 }
 
 @keyframes slideInUp {
-  from {
+  0%, 100% {
     -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
     visibility: hidden;
     opacity: 0;
   }
 
-  to {
+  50% {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    visibility: visible !important;
+    visibility: visible;
     opacity: 1;
   }
 }
 
 .slideInUp {
   animation-name: slideInUp;
-  -webkit-animation-duration: 1s !important;
-  animation-duration: 1s !important;
+  -webkit-animation-duration: 3s !important;
+  animation-duration: 3s !important;
   -webkit-animation-iteration-count: 1 !important;
   animation-iteration-count: 1 !important;
+  animation-fill-mode: forwards;
 }
 
+.hide {
+  display: none;
+}

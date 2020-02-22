@@ -52,6 +52,7 @@ export const userRegister = userData => async (
 
       history.push("/");
     } else {
+      console.log("authData",authData);
       dispatch(authNotAllowed(authData));
     }
   } catch (error) {
@@ -84,6 +85,8 @@ export const userLogin = authData => async (
       );
 
       history.push("/");
+    }else {
+      dispatch(authNotAllowed(authDataResponse))
     }
     //if not registered dispatch(registerNotSucceed)
     // else dispatch authenticate ??
@@ -246,7 +249,9 @@ export const routeLogin = () => (dispatch, getState, { history }) => {
 };
 
 export const routeHome = () => (dispatch, getState, { history }) => {
-  history.push("/");
+  setTimeout(()=>{
+    history.push("/");
+  },1200)
 };
 export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
   history.push("/advert/"+ advert.name +"_id__"+ advert.id);

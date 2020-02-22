@@ -16,7 +16,8 @@ export const auth = (state = defaultState.session, action) => {
   switch (action.type) {
     case types.AUTH_REQUEST:
       return { 
-        ...state, 
+        ...state,
+        notAllowed: false
       };
 
       case types.AUTH_NOTALLOWED:
@@ -29,11 +30,13 @@ export const auth = (state = defaultState.session, action) => {
     case types.AUTH_SUCCESSFUL:
       return {
         ...state,
-        ...action.authData.data
+        ...action.authData.data,
+        notAllowed: false
       };
 
     case types.AUTH_FAIL:
       return action.error;
+      
 
       
 
@@ -140,6 +143,12 @@ export const ui = (state = defaultState.ui, action) => {
   }
 
   if (/_FAIL$/.test(action.type)) {
+    return {
+      loading: false,
+      error: action.error,
+    };
+  }
+  if (/_NOTALLOWED$/.test(action.type)) {
     return {
       loading: false,
       error: action.error,
