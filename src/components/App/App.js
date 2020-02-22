@@ -6,6 +6,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Auth from "../Auth/Auth";
 import Home from "../Home/Home";
 import AdvertDetail from "../AdvertDetail/AdvertDetail";
+import UserPublic from "../UserPublic/UserPublic";
 
 
 
@@ -23,6 +24,7 @@ const App = (props) => {
             <Route path="/login" exact component={Auth} />
             <Route path="/" exact component={Home} />
             <Route path="/advert/:id" exact component={AdvertDetail} />
+            <Route path="/user/:username" exact component={UserPublic} />
             {/* <PrivateRoute path="/profile" exact component={Profile} />
      <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
      <PrivateRoute path="/advert/:id/edit" exact component={AdvertEdit} />

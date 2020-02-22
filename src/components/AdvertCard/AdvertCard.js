@@ -14,7 +14,7 @@ import "./AdvertCard.css";
 import { connect } from "react-redux";
 
 const AdvertCard = props => {
-  const { onRouteAdvertDetail } = props;
+  const { onRouteAdvertDetail, onRouteUserPublic } = props;
   const {
     id,
     name,
@@ -61,7 +61,7 @@ const AdvertCard = props => {
             <div>{`Last update: ${advertDate}`}</div>
             <div className="sub-info">
               <span>By: </span>
-              <div className="owner">{`${owner}`}</div>
+              <div className="owner"onClick={() => onRouteUserPublic(owner)}>{`${owner}`}</div>
             </div>
             <div className="price">$ {price}</div>
           </div>
@@ -112,7 +112,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRouteAdvertDetail: (name, id) =>
-      dispatch(actions.routeAdvertDetail({ name, id }))
+      dispatch(actions.routeAdvertDetail({ name, id })),
+    onRouteUserPublic: (owner) =>
+      dispatch(actions.routeUserPublic({ owner })),
   };
 };
 

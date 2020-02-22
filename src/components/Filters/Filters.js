@@ -22,6 +22,9 @@ const Filters = props => {
   const [expanded, setExpanded] = useState(false);
   const [tag, setTag] = useState("");
 
+
+  console.log("defaultGetAdvertsParams", defaultGetAdvertsParams);
+  
   const handleExpandClick = e => {
     e.preventDefault();
     setExpanded(!expanded);

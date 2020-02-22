@@ -252,3 +252,7 @@ export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) =
   history.push("/advert/"+ advert.name +"_id__"+ advert.id);
   dispatch(getAdvert(advert.id));
 };
+export const routeUserPublic = (advert) => (dispatch, getState, { history }) => {
+  history.push("/user/"+ advert.owner);
+  // dispatch(getAdvert(advert.id));
+};
