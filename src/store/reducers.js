@@ -8,6 +8,7 @@ const defaultState = {
   adverts: {},
   advert: {},
   user: {},
+  userAdvert: {},
   tags: [],
   ui: {}
 };
@@ -108,18 +109,40 @@ export const advert = (state = defaultState.advert, action) => {
 
 export const user = (state = defaultState.user, action) => {
   switch (action.type) {
-    case types.ADVERT_REQUEST:
+    case types.USER_REQUEST:
       return { 
         ...state, 
       };
 
-      case types.ADVERT_SUCCESSFUL:
+      case types.USER_SUCCESSFUL:
         return {
           ...state,
           ...action.userData.result
         };
   
-      case types.ADVERT_FAIL:
+      case types.USER_FAIL:
+        return action.error;
+  
+
+    default:
+      return state;
+  }
+};
+
+export const userAdvert = (state = defaultState.userAdvert, action) => {
+  switch (action.type) {
+    case types.USER_ADVERT_REQUEST:
+      return { 
+        ...state, 
+      };
+
+      case types.USER_ADVERT_SUCCESSFUL:
+        return {
+          ...state,
+          ...action.userAdvertData.result
+        };
+  
+      case types.USER_ADVERT_FAIL:
         return action.error;
   
 

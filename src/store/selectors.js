@@ -23,6 +23,7 @@ export const getAdvert = state => state.advert;
  *  USER SELECTORS 
  **********************/
 export const getUser = state => state.user;
+export const getUserAdvert = state => state.userAdvert;
 
  /**********************
  *  TAGS SELECTORS 

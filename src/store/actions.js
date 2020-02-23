@@ -214,7 +214,7 @@ export const userFail = error => ({
 });
 
 
-export const getUser = (id) => async (
+export const getUser = (userAdverts, user) => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
@@ -224,17 +224,58 @@ export const getUser = (id) => async (
   dispatch(userRequest());
   try {
     const { apiUrl } = getSession(state);
-    const userDataResponse = await WallacloneAPI(apiUrl).getUser(id);
+    console.log("USER", user);
+    
+    const userDataResponse = await WallacloneAPI(apiUrl).getUser(user);
     console.log('userDataResponse', userDataResponse);    
-    if (userDataResponse.data.ok) {
+    if (userDataResponse.data.success) {
       dispatch(userSuccessfull(userDataResponse.data));
+      dispatch(getUserAdvert({...userAdverts}));
     }
 
   } catch (error) {
-    dispatch(userFail(error));
+    dispatch(userFail(error.message));
   }
 };
 
+/**********************
+ *  GET ADVERT
+ **********************/
+export const userAdvertRequest = () => ({
+  type: types.USER_ADVERT_REQUEST
+});
+
+export const userAdvertSuccessfull = userAdvertData => ({
+  type: types.USER_ADVERT_SUCCESSFUL,
+  userAdvertData
+});
+
+export const userAdvertFail = error => ({
+  type: types.USER_ADVERT_FAIL,
+  error
+});
+
+
+export const getUserAdvert = (owner) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+
+  const state = getState();
+  dispatch(userAdvertRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    const userAdvertDataResponse = await WallacloneAPI(apiUrl).getUserAdvert(owner);
+    console.log('userAdvertDataResponse', userAdvertDataResponse);    
+    if (userAdvertDataResponse.data.ok) {
+      dispatch(userAdvertSuccessfull(userAdvertDataResponse.data));
+    }
+
+  } catch (error) {
+    dispatch(userAdvertFail(error));
+  }
+};
 
 
 /**********************

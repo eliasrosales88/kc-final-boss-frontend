@@ -78,7 +78,24 @@ const Wallaclone = API_URL => {
         // Call endpoint and return
         console.log("api", owner);
         
-        let getResponse = await Axios.get(baseURL, {params:{usernane: owner}});
+        let getResponse = await Axios.get(baseURL, {params:{username: owner}});
+
+        return getResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    /**
+     * Get UserAdvert
+     */
+    getUserAdvert: async (params) => {
+      try {
+        // Endpoint
+        let baseURL = `${API_URL}/userAdvert`;
+        // Call endpoint and return
+        console.log("api", params);
+        
+        let getResponse = await Axios.get(baseURL, {params});
 
         return getResponse;
       } catch (error) {
