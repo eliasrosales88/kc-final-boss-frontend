@@ -4,11 +4,25 @@ import AdvertCard from "../AdvertCard/AdvertCard";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import * as actions from "../../store/actions";
-import { getAdverts, getPaginatorCount } from "../../store/selectors";
-import "./Account.css";
+import {
+  getAdverts,
+  getPaginatorCount,
+  getToken,
+  getSession
+} from "../../store/selectors";
 import Filters from "../Filters/Filters";
 import Pagination from "@material-ui/lab/Pagination";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
+import UpdateIcon from "@material-ui/icons/Update";
+import DeleteIcon from "@material-ui/icons/Delete";
 
+import "./Account.css";
+import EnhancedTable from "../EnhancedTable/EnhancedTable";
 const defaultGetAdvertsParams = {
   limit: "8",
   sort: ["updatedAt", -1], //Default filter by newest
@@ -16,13 +30,14 @@ const defaultGetAdvertsParams = {
 };
 const Account = props => {
   console.log(props);
-  const { onGetAdverts, paginatorCount, match } = props;
+  const { onGetAdverts, paginatorCount, token, session, adverts } = props;
+console.log('ADVERTS', adverts);
 
-  const owner = match.params.username;
-  
+  const owner = session.username;
+
   const getAdverts = useCallback(() => {
-    onGetAdverts({...defaultGetAdvertsParams, owner});
-  }, [owner, onGetAdverts]);
+    onGetAdverts({ ...defaultGetAdvertsParams, owner, token });
+  }, [onGetAdverts, owner, token]);
 
   useEffect(() => {
     getAdverts();
@@ -31,8 +46,7 @@ const Account = props => {
   const [page, setPage] = React.useState(1);
   const handlePaginatorChange = (event, value) => {
     setPage(value);
-    console.log("PAGE", value);
-    
+
     let skipAdverts = (value - 1) * parseInt(defaultGetAdvertsParams.limit);
     defaultGetAdvertsParams.skip = skipAdverts;
     onGetAdverts(defaultGetAdvertsParams);
@@ -41,7 +55,33 @@ const Account = props => {
   return (
     <Fragment>
       <h3>{owner}</h3>
-      <div className="home-filters">
+      <Divider />
+      <List component="nav" aria-label="main mailbox folders">
+        <ListItem button>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText primary="Create Advert" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <UpdateIcon />
+          </ListItemIcon>
+          <ListItemText primary="Update user info" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Delete account" />
+        </ListItem>
+      </List>
+
+      {adverts.rows  && 
+        <EnhancedTable adverts={adverts} />
+      }
+
+      {/* <div className="home-filters">
         <Filters defaultGetAdvertsParams={{...defaultGetAdvertsParams, owner}} />
       </div>
       <Divider />
@@ -84,7 +124,7 @@ const Account = props => {
         className="home-paginator"
         page={page}
         siblingCount={0}
-      />
+      /> */}
     </Fragment>
   );
 };
@@ -92,7 +132,9 @@ const Account = props => {
 const mapStateToProps = state => {
   return {
     adverts: getAdverts(state),
-    paginatorCount: getPaginatorCount(state)
+    session: getSession(state),
+    paginatorCount: getPaginatorCount(state),
+    token: getToken(state)
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -101,4 +143,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withSnackbar(Account));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withSnackbar(Account));

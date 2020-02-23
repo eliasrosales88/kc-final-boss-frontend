@@ -4,13 +4,13 @@
 export const getAuth = state => state.auth;
 export const getAuthMessage = state => state.auth.message;
 export const userNotAllowed = state => state.auth.notAllowed;
-export const getToken = state => state.auth.token;
 
 
 /**********************
  *  SESSION SELECTORS 
  **********************/
 export const getSession = state => state.session;
+export const getToken = state => state.session.token;
 
 /**********************
  *  ADVERT SELECTORS 
@@ -24,6 +24,7 @@ export const getAdvert = state => state.advert;
  **********************/
 export const getUser = state => state.user;
 export const getUserAdvert = state => state.userAdvert;
+export const getPaginatorCountUserAdvert = state => state.userAdvert.paginatorCount
 
  /**********************
  *  TAGS SELECTORS 

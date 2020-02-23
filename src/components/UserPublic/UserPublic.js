@@ -4,7 +4,7 @@ import AdvertCard from "../AdvertCard/AdvertCard";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import * as actions from "../../store/actions";
-import { getAdverts, getPaginatorCount, getUser, getUi, getUserAdvert } from "../../store/selectors";
+import { getAdverts, getPaginatorCount, getUser, getUi, getUserAdvert, getPaginatorCountUserAdvert } from "../../store/selectors";
 import "./UserPublic.css";
 import Filters from "../Filters/Filters";
 import Pagination from "@material-ui/lab/Pagination";
@@ -115,7 +115,7 @@ const UserPublic = props => {
 const mapStateToProps = state => {
   return {
     adverts: getAdverts(state),
-    paginatorCount: getPaginatorCount(state),
+    paginatorCount: getPaginatorCountUserAdvert(state),
     userFound: getUser(state),
     ui: getUi(state),
     userAdverts: getUserAdvert(state)

@@ -52,6 +52,34 @@ const Wallaclone = API_URL => {
       }
     },
     /**
+     * Get Adverts
+     */
+    getAccountAdverts: async (params) => {
+      try {
+        console.log("API TOKEN", params.token);
+        
+        // Endpoint
+        let baseURL = `${API_URL}/account`;
+        // Call endpoint and return
+        let getResponse = await Axios.get(baseURL, {
+          params
+        });
+        // let getResponse = await Axios.get({
+        //   method: 'get',
+        //   url: baseURL,
+        //   responseType: 'json',
+        //   data: {
+        //     params,
+        //     token
+        //   }
+        // });
+
+        return getResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    /**
      * Get Advert
      */
     getAdvert: async (id) => {

@@ -140,7 +140,17 @@ export const getAdverts = (params) => async (
   dispatch(advertsRequest());
   try {
     const { apiUrl } = getSession(state);
-    const advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
+    let advertsDataResponse;
+    if (params.token) {
+      console.log('TOKEN HEREEE', params.token);
+      
+      advertsDataResponse = await WallacloneAPI(apiUrl).getAccountAdverts(params);
+      
+    }else {
+      console.log('NO TOKEN HEREEE', params.token);
+      advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
+
+    }
     console.log('advertsDataResponse', advertsDataResponse);
     
     if (advertsDataResponse.data.ok) {
@@ -239,7 +249,7 @@ export const getUser = (userAdverts, user) => async (
 };
 
 /**********************
- *  GET ADVERT
+ *  GET USER ADVERT
  **********************/
 export const userAdvertRequest = () => ({
   type: types.USER_ADVERT_REQUEST
@@ -276,6 +286,10 @@ export const getUserAdvert = (owner) => async (
     dispatch(userAdvertFail(error));
   }
 };
+
+
+
+
 
 
 /**********************
@@ -333,11 +347,6 @@ export const routeHome = () => (dispatch, getState, { history }) => {
     history.push("/");
 };
 
-export const routeAcount = () => (dispatch, getState, { history }) => {
-    history.push("/account");
-};
-
-
 
 export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
   history.push("/advert/"+ advert.name +"_id__"+ advert.id);
@@ -345,5 +354,17 @@ export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) =
 };
 export const routeUserPublic = (advert) => (dispatch, getState, { history }) => {
   history.push("/user/"+ advert.owner);
-  // dispatch(getAdvert(advert.id));
+};
+
+
+export const routeAcount = () => (dispatch, getState, { history }) => {
+  history.push("/account");
+};
+
+export const routeAcountAdvertCreate = () => (dispatch, getState, { history }) => {
+  history.push("/account/advert/create");
+};
+
+export const routeAcountAdvertEdit = (id) => (dispatch, getState, { history }) => {
+  history.push("/account/advert/edit/"+ id);
 };
