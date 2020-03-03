@@ -52,7 +52,6 @@ export const userRegister = userData => async (
 
       history.push("/");
     } else {
-      console.log("authData", authData);
       dispatch(authNotAllowed(authData));
     }
   } catch (error) {
@@ -140,22 +139,18 @@ export const getAdverts = params => async (
     const { apiUrl } = getSession(state);
     let advertsDataResponse;
     if (params.token) {
-      console.log("TOKEN HEREEE", params.token);
 
       advertsDataResponse = await WallacloneAPI(apiUrl).getAccountAdverts(
         params
       );
     } else {
-      console.log("NO TOKEN HEREEE", params.token);
       advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
     }
-    console.log("advertsDataResponse", advertsDataResponse);
 
     if (advertsDataResponse.data.ok) {
       const paginatorCount = Math.ceil(
         advertsDataResponse.data.result.total / params.limit
       );
-      console.log("paginatorCount", paginatorCount);
       advertsDataResponse.data.result.paginatorCount = paginatorCount;
       // advertsDataResponse.data.result.rows = advertsDataResponse.data.result.rows.reverse();
 
@@ -193,7 +188,6 @@ export const getAdvert = (id, token) => async (
     const { apiUrl } = getSession(state);
     let advertDataResponse;
     if (token) {
-      console.log("TOKEN HEREEE", token);
 
       advertDataResponse = await WallacloneAPI(apiUrl).getAccountAdvert(
         id,
@@ -202,7 +196,6 @@ export const getAdvert = (id, token) => async (
     } else {
       advertDataResponse = await WallacloneAPI(apiUrl).getAdvert(id);
     }
-    console.log("advertDataResponse", advertDataResponse);
     if (advertDataResponse.data.ok) {
       dispatch(advertSuccessfull(advertDataResponse.data));
       if (token) {
@@ -240,10 +233,8 @@ export const getUser = (userAdverts, user) => async (
   dispatch(userRequest());
   try {
     const { apiUrl } = getSession(state);
-    console.log("USER", user);
 
     const userDataResponse = await WallacloneAPI(apiUrl).getUser(user);
-    console.log("userDataResponse", userDataResponse);
     if (userDataResponse.data.success) {
       dispatch(userSuccessfull(userDataResponse.data));
       dispatch(getUserAdvert({ ...userAdverts }));
@@ -282,7 +273,6 @@ export const getUserAdvert = owner => async (
     const userAdvertDataResponse = await WallacloneAPI(apiUrl).getUserAdvert(
       owner
     );
-    console.log("userAdvertDataResponse", userAdvertDataResponse);
     if (userAdvertDataResponse.data.ok) {
       dispatch(userAdvertSuccessfull(userAdvertDataResponse.data));
     }
@@ -318,7 +308,6 @@ export const getTags = params => async (
   try {
     const { apiUrl } = getSession(state);
     const tagsDataResponse = await WallacloneAPI(apiUrl).getTags(params);
-    console.log("tagsDataResponse", tagsDataResponse);
 
     if (tagsDataResponse.data.ok) {
       dispatch(tagsSuccessfull(tagsDataResponse.data));

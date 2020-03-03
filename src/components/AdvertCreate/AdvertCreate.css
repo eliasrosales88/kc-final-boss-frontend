@@ -14,8 +14,6 @@
   background-color: var(--accent) !important;
   color: var(--white) !important;
 }
-.advert-create-message {
-}
 
 .advert-create-forSale {
   display: flex;
@@ -24,8 +22,7 @@
   width: 100%;
 }
 
-.advert-create-tags {
-}
+
 
 .advert-create-error-label {
   color: rgb(255, 0, 0);

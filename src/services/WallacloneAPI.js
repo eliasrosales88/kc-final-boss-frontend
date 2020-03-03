@@ -4,9 +4,6 @@ import LocalStorage from "../utils/Storage";
 Axios.interceptors.request.use(
   (config) => {
     let session = LocalStorage.readLocalStorage();
-    console.log(config);
-    console.log(config.url.includes("/apiv1/authenticate"))
-    console.log(config.url.includes("/apiv1/register"))
     
     if (
       session !== null &&
@@ -78,7 +75,6 @@ const Wallaclone = API_URL => {
      */
     getAccountAdverts: async params => {
       try {
-        console.log("API TOKEN", params.token);
 
         // Endpoint
         let baseURL = `${API_URL}/account`;
@@ -97,7 +93,6 @@ const Wallaclone = API_URL => {
      */
     getAccountAdvert: async (id, token) => {
       try {
-        console.log("API TOKEN", token);
 
         // Endpoint
         let baseURL = `${API_URL}/account/advert`;
@@ -133,7 +128,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/advert`;
         // Call endpoint and return
-        console.log("api", id);
 
         let getResponse = await Axios.get(baseURL, { params: { _id: id } });
 
@@ -150,7 +144,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/user`;
         // Call endpoint and return
-        console.log("api", owner);
 
         let getResponse = await Axios.get(baseURL, {
           params: { username: owner }
@@ -169,7 +162,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/userAdvert`;
         // Call endpoint and return
-        console.log("api", params);
 
         let getResponse = await Axios.get(baseURL, { params });
 
@@ -186,7 +178,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account/advert`;
         // Call endpoint and return
-        console.log("api", params);
 
         let postResponse = await Axios.post(baseURL, params.body, {headers: params.headers});
 
