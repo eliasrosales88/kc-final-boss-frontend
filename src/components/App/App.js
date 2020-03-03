@@ -10,6 +10,8 @@ import UserPublic from "../UserPublic/UserPublic";
 import Account from "../Account/Account";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Error404 from "../Error404/Error404";
+import AdvertEdit from "../AdvertEdit/AdvertEdit";
+import AdvertCreate from "../AdvertCreate/AdvertCreate";
 
 const App = props => {
   return (
@@ -26,14 +28,13 @@ const App = props => {
             <Route path="/advert/:id" exact component={AdvertDetail} />
             <Route path="/user/:username" exact component={UserPublic} />
             <PrivateRoute path="/account" exact component={Account} />
-            <Route component={Error404} />
-            {/* <PrivateRoute path="/advert/new" exact component={AdvertEdit} />
+            <PrivateRoute path="/account/advert/create" exact component={AdvertCreate} />
             <PrivateRoute
-              path="/advert/:id/edit"
+              path="/account/advert/:id"
               exact
               component={AdvertEdit}
             />
-            <PrivateRoute component={Error404} /> */}
+            <Route component={Error404} />
           </Switch>
         </Layout>
       </ErrorBoundary>
@@ -49,6 +50,10 @@ const titleHandler = key => {
       return "Login";
     case "/account":
       return "Account";
+    case "/account/advert/create":
+      return "Create Advert";
+    case "/account/advert/:id":
+      return "Edit";
 
     default:
       return "";

@@ -52,7 +52,7 @@ export const userRegister = userData => async (
 
       history.push("/");
     } else {
-      console.log("authData",authData);
+      console.log("authData", authData);
       dispatch(authNotAllowed(authData));
     }
   } catch (error) {
@@ -85,8 +85,8 @@ export const userLogin = authData => async (
       );
 
       history.push("/");
-    }else {
-      dispatch(authNotAllowed(authDataResponse))
+    } else {
+      dispatch(authNotAllowed(authDataResponse));
     }
     //if not registered dispatch(registerNotSucceed)
     // else dispatch authenticate ??
@@ -129,39 +129,38 @@ export const advertsFail = error => ({
   error
 });
 
-
-export const getAdverts = (params) => async (
+export const getAdverts = params => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
 ) => {
-
   const state = getState();
   dispatch(advertsRequest());
   try {
     const { apiUrl } = getSession(state);
     let advertsDataResponse;
     if (params.token) {
-      console.log('TOKEN HEREEE', params.token);
-      
-      advertsDataResponse = await WallacloneAPI(apiUrl).getAccountAdverts(params);
-      
-    }else {
-      console.log('NO TOKEN HEREEE', params.token);
-      advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
+      console.log("TOKEN HEREEE", params.token);
 
+      advertsDataResponse = await WallacloneAPI(apiUrl).getAccountAdverts(
+        params
+      );
+    } else {
+      console.log("NO TOKEN HEREEE", params.token);
+      advertsDataResponse = await WallacloneAPI(apiUrl).getAdverts(params);
     }
-    console.log('advertsDataResponse', advertsDataResponse);
-    
+    console.log("advertsDataResponse", advertsDataResponse);
+
     if (advertsDataResponse.data.ok) {
-      const paginatorCount = Math.ceil(advertsDataResponse.data.result.total/params.limit);
+      const paginatorCount = Math.ceil(
+        advertsDataResponse.data.result.total / params.limit
+      );
       console.log("paginatorCount", paginatorCount);
       advertsDataResponse.data.result.paginatorCount = paginatorCount;
       // advertsDataResponse.data.result.rows = advertsDataResponse.data.result.rows.reverse();
 
       dispatch(advertsSuccessfull(advertsDataResponse.data));
     }
-
   } catch (error) {
     dispatch(advertsFail(error));
   }
@@ -183,28 +182,37 @@ export const advertFail = error => ({
   error
 });
 
-
-export const getAdvert = (id) => async (
+export const getAdvert = (id, token) => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
 ) => {
-
   const state = getState();
   dispatch(advertRequest());
   try {
     const { apiUrl } = getSession(state);
-    const advertDataResponse = await WallacloneAPI(apiUrl).getAdvert(id);
-    console.log('advertDataResponse', advertDataResponse);    
+    let advertDataResponse;
+    if (token) {
+      console.log("TOKEN HEREEE", token);
+
+      advertDataResponse = await WallacloneAPI(apiUrl).getAccountAdvert(
+        id,
+        token
+      );
+    } else {
+      advertDataResponse = await WallacloneAPI(apiUrl).getAdvert(id);
+    }
+    console.log("advertDataResponse", advertDataResponse);
     if (advertDataResponse.data.ok) {
       dispatch(advertSuccessfull(advertDataResponse.data));
+      if (token) {
+        dispatch(routeAcountAdvertEdit(id));
+      }
     }
-
   } catch (error) {
     dispatch(advertFail(error));
   }
 };
-
 
 /**********************
  *  GET USER
@@ -223,26 +231,23 @@ export const userFail = error => ({
   error
 });
 
-
 export const getUser = (userAdverts, user) => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
 ) => {
-
   const state = getState();
   dispatch(userRequest());
   try {
     const { apiUrl } = getSession(state);
     console.log("USER", user);
-    
+
     const userDataResponse = await WallacloneAPI(apiUrl).getUser(user);
-    console.log('userDataResponse', userDataResponse);    
+    console.log("userDataResponse", userDataResponse);
     if (userDataResponse.data.success) {
       dispatch(userSuccessfull(userDataResponse.data));
-      dispatch(getUserAdvert({...userAdverts}));
+      dispatch(getUserAdvert({ ...userAdverts }));
     }
-
   } catch (error) {
     dispatch(userFail(error.message));
   }
@@ -265,32 +270,26 @@ export const userAdvertFail = error => ({
   error
 });
 
-
-export const getUserAdvert = (owner) => async (
+export const getUserAdvert = owner => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
 ) => {
-
   const state = getState();
   dispatch(userAdvertRequest());
   try {
     const { apiUrl } = getSession(state);
-    const userAdvertDataResponse = await WallacloneAPI(apiUrl).getUserAdvert(owner);
-    console.log('userAdvertDataResponse', userAdvertDataResponse);    
+    const userAdvertDataResponse = await WallacloneAPI(apiUrl).getUserAdvert(
+      owner
+    );
+    console.log("userAdvertDataResponse", userAdvertDataResponse);
     if (userAdvertDataResponse.data.ok) {
       dispatch(userAdvertSuccessfull(userAdvertDataResponse.data));
     }
-
   } catch (error) {
     dispatch(userAdvertFail(error));
   }
 };
-
-
-
-
-
 
 /**********************
  *  GET TAGS
@@ -309,26 +308,101 @@ export const tagsFail = error => ({
   error
 });
 
-
-export const getTags = (params) => async (
+export const getTags = params => async (
   dispatch,
   getState,
   { history, services: { WallacloneAPI } }
 ) => {
-
   const state = getState();
   dispatch(tagsRequest());
   try {
     const { apiUrl } = getSession(state);
     const tagsDataResponse = await WallacloneAPI(apiUrl).getTags(params);
-    console.log('tagsDataResponse', tagsDataResponse);
-    
+    console.log("tagsDataResponse", tagsDataResponse);
+
     if (tagsDataResponse.data.ok) {
       dispatch(tagsSuccessfull(tagsDataResponse.data));
     }
-
   } catch (error) {
     dispatch(tagsFail(error));
+  }
+};
+
+/**********************
+ *  PATCH ADVERT_UPDATE
+ **********************/
+export const advertUpdateRequest = () => ({
+  type: types.ADVERT_REQUEST
+});
+
+export const advertUpdateSuccessfull = advertData => ({
+  type: types.ADVERT_SUCCESSFUL,
+  advertData
+});
+
+export const advertUpdateFail = error => ({
+  type: types.ADVERT_FAIL,
+  error
+});
+
+export const updateAdvert = params => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(advertUpdateRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    let advertUpdateDataResponse;
+
+    advertUpdateDataResponse = await WallacloneAPI(apiUrl).updateAccountAdvert(
+      params
+    );
+    if (advertUpdateDataResponse.data.ok) {
+      dispatch(advertUpdateSuccessfull(advertUpdateDataResponse.data));
+    }
+  } catch (error) {
+    dispatch(advertFail(error));
+  }
+};
+
+/**********************
+ *  CREATE ADVERT
+ **********************/
+export const advertCreateRequest = () => ({
+  type: types.ADVERT_REQUEST
+});
+
+export const advertCreateSuccessfull = advertData => ({
+  type: types.ADVERT_SUCCESSFUL,
+  advertData
+});
+
+export const advertCreateFail = error => ({
+  type: types.ADVERT_FAIL,
+  error
+});
+
+export const createAdvert = (params) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(advertCreateRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    let advertCreateDataResponse;
+
+      advertCreateDataResponse = await WallacloneAPI(
+        apiUrl
+      ).postUserAdvert(params);
+    if (advertCreateDataResponse.data.success) {
+      dispatch(advertCreateSuccessfull(advertCreateDataResponse.data));
+    }
+  } catch (error) {
+    dispatch(advertFail(error));
   }
 };
 
@@ -344,27 +418,37 @@ export const routeLogin = () => (dispatch, getState, { history }) => {
 };
 
 export const routeHome = () => (dispatch, getState, { history }) => {
-    history.push("/");
+  history.push("/");
 };
 
-
-export const routeAdvertDetail = (advert) => (dispatch, getState, { history }) => {
-  history.push("/advert/"+ advert.name +"_id__"+ advert.id);
+export const routeAdvertDetail = advert => (
+  dispatch,
+  getState,
+  { history }
+) => {
+  history.push("/advert/" + advert.name + "_id__" + advert.id);
   dispatch(getAdvert(advert.id));
 };
-export const routeUserPublic = (advert) => (dispatch, getState, { history }) => {
-  history.push("/user/"+ advert.owner);
+export const routeUserPublic = advert => (dispatch, getState, { history }) => {
+  history.push("/user/" + advert.owner);
 };
-
 
 export const routeAcount = () => (dispatch, getState, { history }) => {
   history.push("/account");
 };
 
-export const routeAcountAdvertCreate = () => (dispatch, getState, { history }) => {
+export const routeAcountAdvertCreate = () => (
+  dispatch,
+  getState,
+  { history }
+) => {
   history.push("/account/advert/create");
 };
 
-export const routeAcountAdvertEdit = (id) => (dispatch, getState, { history }) => {
-  history.push("/account/advert/edit/"+ id);
+export const routeAcountAdvertEdit = id => (
+  dispatch,
+  getState,
+  { history }
+) => {
+  history.push("/account/advert/" + id);
 };

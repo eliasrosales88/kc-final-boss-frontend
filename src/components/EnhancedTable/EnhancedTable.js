@@ -13,7 +13,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -24,25 +23,11 @@ import { connect } from "react-redux";
 
 import * as actions from "../../store/actions";
 import { Button } from "@material-ui/core";
-function createData(id, name, price, action) {
-  return { id, name, price, action };
+import { getToken } from "../../store/selectors";
+function createData(id, name, price, updated, editButton, deleteButton) {
+  return { id, name, price, updated, editButton, deleteButton };
 }
 
-// const rows = [
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Donut', 452, 25.0, 51, 4.9),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-//   createData('Honeycomb', 408, 3.2, 87, 6.5),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Jelly Bean', 375, 0.0, 94, 0.0),
-//   createData('KitKat', 518, 26.0, 65, 7.0),
-//   createData('Lollipop', 392, 0.2, 98, 0.0),
-//   createData('Marshmallow', 318, 0, 81, 2.0),
-//   createData('Nougat', 360, 19.0, 9, 37.0),
-//   createData('Oreo', 437, 18.0, 63, 4.0),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -73,19 +58,17 @@ function stableSort(array, comparator) {
 const headCells = [
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
   { id: "price", numeric: true, disablePadding: false, label: "Price" },
-  { id: "edit", numeric: true, disablePadding: false, label: "Edit" },
-  { id: "delete", numeric: true, disablePadding: false, label: "Delete" }
+  { id: "updated", numeric: false, disablePadding: false, label: "UpdatedAt" },
+  { id: "edit", numeric: false, disablePadding: false, label: "Edit" },
+  { id: "delete", numeric: false, disablePadding: false, label: "Delete" }
 ];
 
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort
+    onRequestSort,
   } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
@@ -94,14 +77,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell> */}
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -228,18 +203,29 @@ const useStyles = makeStyles(theme => ({
 }));
 let tableAdverts = [createData(0, "Default", 0, "Edit")];
 
+const convertDate = updatedAt => {
+  let dateToConvert = new Date(updatedAt).toLocaleTimeString();
+  let year = new Date(updatedAt).getFullYear();
+  let month = new Date(updatedAt).getMonth();
+  let day = new Date(updatedAt).getDate();
+  return `${day}/${month}/${year} ${dateToConvert}`;
+};
+
+
 const EnhancedTable = props => {
-  const { adverts, onEditAdvert } = props;
+  const { adverts, onEditAdvert, token } = props;
 
 
 
   tableAdverts = adverts.rows.map(advert => {
+    let date = convertDate(advert.updatedAt);
     return createData(
       advert._id,
       advert.name,
       advert.price,
-      <Button color="primary" onClick={()=> onEditAdvert(advert._id)}>Edit</Button>,
-      67
+      date,
+      <Button color="primary" onClick={()=> onEditAdvert(advert._id, token)}>Edit</Button>,
+      <Button color="primary" >Delete</Button>,
     );
   });
 
@@ -266,25 +252,7 @@ const EnhancedTable = props => {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -357,8 +325,10 @@ const EnhancedTable = props => {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
-                      <TableCell align="right">{row.action}</TableCell>
+                      <TableCell >{row.price}</TableCell>
+                      <TableCell >{row.updated}</TableCell>
+                      <TableCell >{row.editButton}</TableCell>
+                      <TableCell >{row.deleteButton}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -393,12 +363,12 @@ const mapStateToProps = state => {
     // adverts: getAdverts(state),
     // session: getSession(state),
     // paginatorCount: getPaginatorCount(state),
-    // token: getToken(state)
+     token: getToken(state)
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onEditAdvert: id => dispatch(actions.routeAcountAdvertEdit(id))
+    onEditAdvert: (id, token) => dispatch(actions.getAdvert(id, token))
     // onDeleteAdvert: (advert, deleteItem) => dispatch(actions.deleteAdvert(advert,deleteItem)),
   };
 };

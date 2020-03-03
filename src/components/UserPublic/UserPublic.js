@@ -1,10 +1,10 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect } from "react";
 import { Divider } from "@material-ui/core";
 import AdvertCard from "../AdvertCard/AdvertCard";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import * as actions from "../../store/actions";
-import { getAdverts, getPaginatorCount, getUser, getUi, getUserAdvert, getPaginatorCountUserAdvert } from "../../store/selectors";
+import { getAdverts, getUser, getUi, getUserAdvert, getPaginatorCountUserAdvert } from "../../store/selectors";
 import "./UserPublic.css";
 import Filters from "../Filters/Filters";
 import Pagination from "@material-ui/lab/Pagination";
@@ -16,19 +16,9 @@ const defaultGetAdvertsParams = {
   includeTotal: "true"
 };
 const UserPublic = props => {
-  console.log(props);
   const { onGetAdverts, paginatorCount, match, onGetUser, ui } = props;
 
   const owner = match.params.username;
-  
-  // const getAdverts = useCallback(() => {
-  //   onGetAdverts({...defaultGetAdvertsParams, owner});
-  // }, [owner, onGetAdverts]);
-  
-  
-  // useEffect(() => {
-  //   getAdverts();
-  // }, [getAdverts]);
 
   const getUser = useCallback(() => {
     onGetUser({...defaultGetAdvertsParams, owner}, owner);
