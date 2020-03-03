@@ -333,6 +333,14 @@ export const advertUpdateFail = error => ({
   type: types.ADVERT_FAIL,
   error
 });
+export const notificationFail = () => ({
+  type: types.NOTIFICATION_KO,
+  
+});
+export const notificationSuccessful = () => ({
+  type: types.NOTIFICATION_OK,
+  
+});
 
 export const updateAdvert = params => async (
   dispatch,
@@ -350,9 +358,11 @@ export const updateAdvert = params => async (
     );
     if (advertUpdateDataResponse.data.ok) {
       dispatch(advertUpdateSuccessfull(advertUpdateDataResponse.data));
+      dispatch(notificationSuccessful());
     }
   } catch (error) {
     dispatch(advertFail(error));
+    dispatch(notificationFail());
   }
 };
 

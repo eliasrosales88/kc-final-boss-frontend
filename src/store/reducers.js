@@ -185,6 +185,7 @@ export const ui = (state = defaultState.ui, action) => {
     return {
       loading: false,
       error: null,
+      success: true
     };
   }
 
@@ -192,6 +193,7 @@ export const ui = (state = defaultState.ui, action) => {
     return {
       loading: false,
       error: action.error,
+      success: false
     };
   }
   if (/_NOTALLOWED$/.test(action.type)) {
@@ -199,6 +201,20 @@ export const ui = (state = defaultState.ui, action) => {
       loading: false,
       error: action.error,
     };
+  }
+
+  if (action.type === 'NOTIFICATION_KO') {
+    return {
+      ...state,
+      notification: false
+    }
+  }
+
+  if (action.type === 'NOTIFICATION_OK') {
+    return {
+      ...state,
+      notification: true
+    }
   }
   return state;
 };

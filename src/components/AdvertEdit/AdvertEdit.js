@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect, useCallback } from "react";
-import { getSession, getAdvert, getToken } from "../../store/selectors";
+import { getSession, getAdvert, getToken, getUi } from "../../store/selectors";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Button, TextField, MenuItem, Chip } from "@material-ui/core";
 import "./AdvertEdit.css";
 import { useForm } from "react-hook-form";
+import { withSnackbar } from "notistack";
 
 const AdvertEdit = props => {
   const { register, handleSubmit, errors } = useForm({});
@@ -25,9 +26,32 @@ const AdvertEdit = props => {
     }
   }, [props]);
 
+
+  const notify = useCallback(() => {
+    if (props.ui.notification) {
+      props.enqueueSnackbar("Advert updated", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "success",
+        autoHideDuration: 1500
+      });
+    }else if(props.ui.notification !== undefined && !props.ui.notification ) {
+      props.enqueueSnackbar("Something went wrong", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "error",
+        autoHideDuration: 1500
+      });
+    }
+  }, [props]);
   useEffect(() => {
     load();
-  }, [load]);
+    notify();
+  }, [load, notify]);
 
   const handleSelectChange = event => {
     setAdvert({ ...advert, forSale: event.target.value });
@@ -262,7 +286,8 @@ const mapStateToProps = state => {
   return {
     session: getSession(state),
     advert: getAdvert(state),
-    token: getToken(state)
+    token: getToken(state),
+    ui: getUi(state)
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -276,4 +301,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AdvertEdit));
+)(withRouter(withSnackbar(AdvertEdit)));

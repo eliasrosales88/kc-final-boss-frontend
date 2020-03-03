@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from "react";
-import { getSession, getAdvert, getToken } from "../../store/selectors";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
+import { getSession, getAdvert, getToken, getUi } from "../../store/selectors";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { Button, TextField, MenuItem, Chip, Divider } from "@material-ui/core";
 
 import "./AdvertCreate.css";
 import { useForm } from "react-hook-form";
+import { withSnackbar } from "notistack";
 
 const AdvertCreate = props => {
   const { register, handleSubmit, errors } = useForm({});
@@ -33,7 +33,6 @@ const AdvertCreate = props => {
       dataToSend.photo = selectedFile;
     }
 
-
     dataToSend = buildFormData(dataToSend);
 
     props.onCreateAdvert(
@@ -54,6 +53,33 @@ const AdvertCreate = props => {
     return formData;
   };
 
+  
+  const notify = useCallback(() => {
+    if (props.ui.success) {
+      props.enqueueSnackbar("Advert created", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "success",
+        autoHideDuration: 1500
+      });
+    }else if(props.ui.success !== undefined && !props.ui.success ) {
+      props.enqueueSnackbar("Something went wrong", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "error",
+        autoHideDuration: 1500
+      });
+    }
+  }, [props]);
+
+  useEffect(() => {
+    notify();
+  }, [notify]);
+
   const handleChipDelete = chipToDelete => () => {
     let chips = chipData.filter(chip => chip.key !== chipToDelete.key);
     setChipData([...chips]);
@@ -73,7 +99,6 @@ const AdvertCreate = props => {
           label: chipValue.replace(", ", "")
         }
       ]);
-
     }
   };
 
@@ -228,12 +253,12 @@ const AdvertCreate = props => {
   );
 };
 
-
 const mapStateToProps = state => {
   return {
     session: getSession(state),
     advert: getAdvert(state),
-    token: getToken(state)
+    token: getToken(state),
+    ui: getUi(state)
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -245,4 +270,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AdvertCreate));
+)(withSnackbar(AdvertCreate));
