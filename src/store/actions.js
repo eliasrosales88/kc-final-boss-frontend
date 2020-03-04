@@ -158,6 +158,10 @@ export const getAdverts = params => async (
     }
   } catch (error) {
     dispatch(advertsFail(error));
+    if (error.message === "Error: Request failed with status code 401") {
+      dispatch(clearSession());
+      dispatch(routeLogin());
+    }
   }
 };
 /**********************
@@ -204,6 +208,10 @@ export const getAdvert = (id, token) => async (
     }
   } catch (error) {
     dispatch(advertFail(error));
+    if (error.message === "Error: Request failed with status code 401") {
+      dispatch(clearSession());
+      dispatch(routeLogin());
+    }
   }
 };
 
@@ -278,6 +286,10 @@ export const getUserAdvert = owner => async (
     }
   } catch (error) {
     dispatch(userAdvertFail(error));
+    if (error.message === "Error: Request failed with status code 401") {
+      dispatch(clearSession());
+      dispatch(routeLogin());
+    }
   }
 };
 
@@ -363,6 +375,10 @@ export const updateAdvert = params => async (
   } catch (error) {
     dispatch(advertFail(error));
     dispatch(notificationFail());
+    if (error.message === "Error: Request failed with status code 401") {
+      dispatch(clearSession());
+      dispatch(routeLogin());
+    }
   }
 };
 /**********************

@@ -29,9 +29,6 @@ const AdvertCard = props => {
   } = props;
 
   let urlName = name.replace(/\s/g, "%20");
-  console.log("urlName", urlName);
-  
-
   const convertDate = updatedAt => {
     let dateToConvert = new Date(updatedAt).toLocaleTimeString();
     let year = new Date(updatedAt).getFullYear();
