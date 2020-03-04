@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Divider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
@@ -19,25 +19,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import "./Account.css";
 import EnhancedTable from "../EnhancedTable/EnhancedTable";
-const defaultGetAdvertsParams = {
-  limit: "",
-  sort: ["updatedAt", -1], //Default filter by newest
-  includeTotal: "true"
-};
+
 const Account = props => {
-  console.log(props);
-  const { onGetAdverts, onRouteAcountAdvertCreate, token, session, adverts } = props;
-console.log('ADVERTS', adverts);
+  const { onRouteAcountAdvertCreate, session } = props;
 
   const owner = session.username;
 
-  const getAdverts = useCallback(() => {
-    onGetAdverts({ ...defaultGetAdvertsParams, owner, token });
-  }, [onGetAdverts, owner, token]);
-
-  useEffect(() => {
-    getAdverts();
-  }, [getAdverts]);
 
   
   
@@ -68,9 +55,7 @@ console.log('ADVERTS', adverts);
         </ListItem>
       </List>
 
-      {adverts.rows  && 
-        <EnhancedTable adverts={adverts} />
-      }
+        <EnhancedTable />
 
     </Fragment>
   );

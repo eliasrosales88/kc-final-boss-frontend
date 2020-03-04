@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -23,7 +23,15 @@ import { connect } from "react-redux";
 
 import * as actions from "../../store/actions";
 import { Button } from "@material-ui/core";
-import { getToken } from "../../store/selectors";
+import { getToken, getAdverts, getSession } from "../../store/selectors";
+import DeleteAdvertModal from "../DeleteAdvertModal/DeleteAdvertModal";
+
+const defaultGetAdvertsParams = {
+  limit: "",
+  sort: ["updatedAt", -1], //Default filter by newest
+  includeTotal: "true"
+};
+
 function createData(id, name, price, updated, editButton, deleteButton) {
   return { id, name, price, updated, editButton, deleteButton };
 }
@@ -213,21 +221,31 @@ const convertDate = updatedAt => {
 
 
 const EnhancedTable = props => {
-  const { adverts, onEditAdvert, token } = props;
+  const { adverts, onEditAdvert, token, onGetAdverts, session } = props;
 
+  const owner = session.username;
+  const getAdverts = useCallback(() => {
+    onGetAdverts({ ...defaultGetAdvertsParams, owner, token });
+  }, [onGetAdverts, owner, token]);
 
+  useEffect(() => {
+    getAdverts();
+  }, [getAdverts]);
 
-  tableAdverts = adverts.rows.map(advert => {
-    let date = convertDate(advert.updatedAt);
-    return createData(
-      advert._id,
-      advert.name,
-      advert.price,
-      date,
-      <Button color="primary" onClick={()=> onEditAdvert(advert._id, token)}>Edit</Button>,
-      <Button color="primary" >Delete</Button>,
-    );
-  });
+  if (adverts.rows) {
+    tableAdverts = adverts.rows.map(advert => {
+      let date = convertDate(advert.updatedAt);
+      return createData(
+        advert._id,
+        advert.name,
+        advert.price,
+        date,
+        <Button color="primary" onClick={()=> onEditAdvert(advert._id, token)}>Edit</Button>,
+        <Button color="primary"> <DeleteAdvertModal updateAdvertList={{ ...defaultGetAdvertsParams, owner, token }} advertToDelete={advert._id} /> </Button>,
+      );
+    });
+  }
+
 
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
@@ -360,16 +378,15 @@ const EnhancedTable = props => {
 
 const mapStateToProps = state => {
   return {
-    // adverts: getAdverts(state),
-    // session: getSession(state),
-    // paginatorCount: getPaginatorCount(state),
-     token: getToken(state)
+    adverts: getAdverts(state),
+    session: getSession(state),
+    token: getToken(state)
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onEditAdvert: (id, token) => dispatch(actions.getAdvert(id, token))
-    // onDeleteAdvert: (advert, deleteItem) => dispatch(actions.deleteAdvert(advert,deleteItem)),
+    onEditAdvert: (id, token) => dispatch(actions.getAdvert(id, token)),
+    onGetAdverts: params => dispatch(actions.getAdverts(params)),
   };
 };
 

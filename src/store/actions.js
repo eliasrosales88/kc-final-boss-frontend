@@ -365,6 +365,46 @@ export const updateAdvert = params => async (
     dispatch(notificationFail());
   }
 };
+/**********************
+ *  DELETE ADVERT
+ **********************/
+export const advertDeleteRequest = () => ({
+  type: types.ADVERT_REQUEST
+});
+
+export const advertDeleteSuccessfull = advertData => ({
+  type: types.ADVERT_SUCCESSFUL,
+  advertData
+});
+
+export const advertDeleteFail = error => ({
+  type: types.ADVERT_FAIL,
+  error
+});
+
+
+export const deleteAdvert = (id, updateAdvertList) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(advertDeleteRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    let advertDeleteDataResponse;
+
+    advertDeleteDataResponse = await WallacloneAPI(apiUrl).deleteAccountAdvert(
+      id
+    );
+    if (advertDeleteDataResponse.data.ok) {
+      dispatch(advertDeleteSuccessfull(advertDeleteDataResponse.data));
+      dispatch(getAdverts(updateAdvertList));
+    }
+  } catch (error) {
+    dispatch(advertDeleteFail(error));
+  }
+};
 
 /**********************
  *  CREATE ADVERT

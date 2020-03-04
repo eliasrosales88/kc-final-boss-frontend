@@ -185,6 +185,24 @@ const Wallaclone = API_URL => {
       } catch (error) {
         throw new Error(error);
       }
+    },
+    /**
+     * Delete account advert
+     */
+    deleteAccountAdvert: async id => {
+      try {
+        // Endpoint
+        console.log(id);
+        
+        let baseURL = `${API_URL}/account/advert`;
+        // Call endpoint and return
+
+        let deleteResponse = await Axios.delete(baseURL, { data: { _id: id } });
+
+        return deleteResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
     }
   };
 };
