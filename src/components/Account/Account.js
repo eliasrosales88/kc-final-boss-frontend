@@ -19,6 +19,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import "./Account.css";
 import EnhancedTable from "../EnhancedTable/EnhancedTable";
+import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
 
 const Account = props => {
   const { onRouteAcountAdvertCreate, session } = props;
@@ -44,7 +45,9 @@ const Account = props => {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          <ListItemText primary="Delete account" />
+          <ListItemText>
+          <DeleteUserModal  />
+          </ListItemText>
         </ListItem>
         <Divider />
         <ListItem button onClick={onRouteAcountAdvertCreate}>

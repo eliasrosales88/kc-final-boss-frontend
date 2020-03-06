@@ -192,12 +192,26 @@ const Wallaclone = API_URL => {
     deleteAccountAdvert: async id => {
       try {
         // Endpoint
-        console.log(id);
-        
         let baseURL = `${API_URL}/account/advert`;
         // Call endpoint and return
 
         let deleteResponse = await Axios.delete(baseURL, { data: { _id: id } });
+
+        return deleteResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    /**
+     * Delete account user
+     */
+    deleteAccountUser: async username => {
+      try {
+        // Endpoint
+        let baseURL = `${API_URL}/account/user`;
+        // Call endpoint and return
+
+        let deleteResponse = await Axios.delete(baseURL, { data: { username } });
 
         return deleteResponse;
       } catch (error) {

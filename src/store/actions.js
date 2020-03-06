@@ -421,6 +421,47 @@ export const deleteAdvert = (id, updateAdvertList) => async (
     dispatch(advertDeleteFail(error));
   }
 };
+/**********************
+ *  DELETE USER
+ **********************/
+export const userDeleteRequest = () => ({
+  type: types.USER_REQUEST
+});
+
+export const userDeleteSuccessfull = userData => ({
+  type: types.USER_SUCCESSFUL,
+  userData
+});
+
+export const userDeleteFail = error => ({
+  type: types.USER_FAIL,
+  error
+});
+
+
+export const deleteUser = (username) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(userDeleteRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    let userDeleteDataResponse;
+
+    userDeleteDataResponse = await WallacloneAPI(apiUrl).deleteAccountUser(
+      username
+    );
+    if (userDeleteDataResponse.data.ok) {
+      dispatch(userDeleteSuccessfull(userDeleteDataResponse.data));
+      dispatch(routeRegister());
+      dispatch(clearSession());
+    }
+  } catch (error) {
+    dispatch(userDeleteFail(error));
+  }
+};
 
 /**********************
  *  CREATE ADVERT
