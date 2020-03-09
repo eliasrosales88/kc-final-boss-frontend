@@ -55,7 +55,7 @@ const AdvertCreate = props => {
 
   
   const notify = useCallback(() => {
-    if (props.ui.success) {
+    if (props.ui.notification) {
       props.enqueueSnackbar("Advert created", {
         anchorOrigin: {
           vertical: "top",

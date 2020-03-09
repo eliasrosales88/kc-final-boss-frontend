@@ -444,11 +444,11 @@ export const updateAccountUser = params => async (
     );
     if (userUpdateDataResponse.data.ok) {
       dispatch(userUpdateSuccessfull(userUpdateDataResponse.data));
-      // dispatch(notificationSuccessful());
+      dispatch(notificationSuccessful());
     }
   } catch (error) {
     dispatch(advertFail(error));
-    // dispatch(notificationFail());
+    dispatch(notificationFail());
     if (error.message === "Error: Request failed with status code 401") {
       dispatch(clearSession());
       dispatch(routeLogin());
@@ -573,6 +573,7 @@ export const createAdvert = (params) => async (
       ).postUserAdvert(params);
     if (advertCreateDataResponse.data.success) {
       dispatch(advertCreateSuccessfull(advertCreateDataResponse.data));
+      dispatch(notificationSuccessful());
     }
   } catch (error) {
     dispatch(advertFail(error));

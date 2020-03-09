@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   getSession,
-  getAdvert,
   getToken,
   getUi,
   getUser
@@ -9,7 +8,7 @@ import {
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, TextField, MenuItem, Chip } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import "./UserEdit.css";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
@@ -38,33 +37,33 @@ const UserEdit = props => {
     }
   }, [match.params.username, onGetUser, session.username, userStore.username]);
 
-  // const notify = useCallback(() => {
-  //   if (props.ui.notification) {
-  //     props.enqueueSnackbar("Advert updated", {
-  //       anchorOrigin: {
-  //         vertical: "top",
-  //         horizontal: "center",
-  //       },
-  //       variant: "success",
-  //       autoHideDuration: 1500
-  //     });
-  //   }else if(props.ui.notification !== undefined && !props.ui.notification ) {
-  //     props.enqueueSnackbar("Something went wrong", {
-  //       anchorOrigin: {
-  //         vertical: "top",
-  //         horizontal: "center",
-  //       },
-  //       variant: "error",
-  //       autoHideDuration: 1500
-  //     });
-  //   }
-  // }, [props]);
+  const notify = useCallback(() => {
+    if (props.ui.notification) {
+      props.enqueueSnackbar("User updated", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "success",
+        autoHideDuration: 1500
+      });
+    }else if(props.ui.notification !== undefined && !props.ui.notification ) {
+      props.enqueueSnackbar("Something went wrong", {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        variant: "error",
+        autoHideDuration: 1500
+      });
+    }
+  }, [props]);
 
   useEffect(() => {
     load();
-    // notify();
-    // }, [load, notify]);
-  }, [load]);
+    notify();
+    }, [load, notify]);
+  // }, [load]);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -75,26 +74,12 @@ const UserEdit = props => {
     dataToSend.twitter = user.twitter;
     dataToSend.updatedAt = new Date().toISOString();
 
-    // dataToSend = buildFormData(dataToSend);
-    console.log("dataToSend",dataToSend);
-    
 
     onUpdateUser(
-      { body: dataToSend, headers: { "Content-Type": "multipart/form-data" } }
+      { body: dataToSend }
     );
   };
 
-  const buildFormData = object => {
-    const formData = new FormData();
-    for (const key in object) {
-      if (object.hasOwnProperty(key)) {
-        const element = object[key];
-
-        formData.append(key, element);
-      }
-    }
-    return formData;
-  };
 
   const handleTextChange = event => {
     const { name, value } = event.target;
