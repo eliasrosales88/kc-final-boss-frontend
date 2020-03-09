@@ -22,20 +22,21 @@ import EnhancedTable from "../EnhancedTable/EnhancedTable";
 import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
 
 const Account = props => {
-  const { onRouteAcountAdvertCreate, session } = props;
+  const { onRouteAcountAdvertCreate, onRouteAcountUserEdit, session } = props;
 
-  const owner = session.username;
-
+  const username = session.username;
+  console.log(username);
+  
 
   
   
 
   return (
     <Fragment>
-      <h3>{owner}</h3>
+      <h3>{username}</h3>
       
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
+        <ListItem button onClick={() => onRouteAcountUserEdit(username)}>
           <ListItemIcon>
             <UpdateIcon />
           </ListItemIcon>
@@ -75,7 +76,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onGetAdverts: params => dispatch(actions.getAdverts(params)),
-    onRouteAcountAdvertCreate: () => dispatch(actions.routeAcountAdvertCreate())
+    onRouteAcountAdvertCreate: () => dispatch(actions.routeAcountAdvertCreate()),
+    onRouteAcountUserEdit: (username) => dispatch(actions.routeAcountUserEdit(username))
+
   };
 };
 

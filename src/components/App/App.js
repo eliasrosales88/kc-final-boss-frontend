@@ -12,6 +12,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Error404 from "../Error404/Error404";
 import AdvertEdit from "../AdvertEdit/AdvertEdit";
 import AdvertCreate from "../AdvertCreate/AdvertCreate";
+import UserEdit from "../UserEdit/UserEdit";
 
 const App = props => {
   return (
@@ -29,6 +30,7 @@ const App = props => {
             <Route path="/user/:username" exact component={UserPublic} />
             <PrivateRoute path="/account" exact component={Account} />
             <PrivateRoute path="/account/advert/create" exact component={AdvertCreate} />
+            <PrivateRoute path="/account/user/:username" exact component={UserEdit} />
             <PrivateRoute
               path="/account/advert/:id"
               exact

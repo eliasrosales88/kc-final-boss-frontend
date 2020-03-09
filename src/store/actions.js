@@ -252,6 +252,31 @@ export const getUser = (userAdverts, user) => async (
   }
 };
 
+
+/**********************
+ *  GET ACCOUNT USER
+ **********************/
+
+export const getAccountUser = (username) => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(userRequest());
+  try {
+    const { apiUrl } = getSession(state);
+
+    const userDataResponse = await WallacloneAPI(apiUrl).getAccountUser(username);
+    if (userDataResponse.data.success) {
+      dispatch(userSuccessfull(userDataResponse.data));
+    }
+  } catch (error) {
+    dispatch(userFail(error.message));
+  }
+};
+
+
 /**********************
  *  GET USER ADVERT
  **********************/
@@ -381,6 +406,58 @@ export const updateAdvert = params => async (
     }
   }
 };
+
+
+
+/**********************
+ *  PATCH USER_UPDATE
+ **********************/
+export const userUpdateRequest = () => ({
+  type: types.USER_REQUEST
+});
+
+export const userUpdateSuccessfull = userData => ({
+  type: types.USER_SUCCESSFUL,
+  userData
+});
+
+export const userUpdateFail = error => ({
+  type: types.USER_FAIL,
+  error
+});
+
+
+export const updateAccountUser = params => async (
+  dispatch,
+  getState,
+  { history, services: { WallacloneAPI } }
+) => {
+  const state = getState();
+  dispatch(userUpdateRequest());
+  try {
+    const { apiUrl } = getSession(state);
+    let userUpdateDataResponse;
+    console.log(params);
+    
+    userUpdateDataResponse = await WallacloneAPI(apiUrl).updateAccountUser(
+      params
+    );
+    if (userUpdateDataResponse.data.ok) {
+      dispatch(userUpdateSuccessfull(userUpdateDataResponse.data));
+      // dispatch(notificationSuccessful());
+    }
+  } catch (error) {
+    dispatch(advertFail(error));
+    // dispatch(notificationFail());
+    if (error.message === "Error: Request failed with status code 401") {
+      dispatch(clearSession());
+      dispatch(routeLogin());
+    }
+  }
+};
+
+
+
 /**********************
  *  DELETE ADVERT
  **********************/
@@ -547,4 +624,12 @@ export const routeAcountAdvertEdit = id => (
   { history }
 ) => {
   history.push("/account/advert/" + id);
+};
+
+export const routeAcountUserEdit = username => (
+  dispatch,
+  getState,
+  { history }
+) => {
+  history.push("/account/user/" + username);
 };

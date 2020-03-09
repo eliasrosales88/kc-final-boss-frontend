@@ -1,0 +1,38 @@
+.user-edit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+.user-edit-info h1 {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.user-edit-form {
+  max-width: 80%;
+  width: 100%;
+}
+.user-edit-button {
+  background-color: var(--accent) !important;
+  color: var(--white) !important;
+}
+
+.user-edit-email {
+    display: flex;
+}
+
+.user-edit-error-label {
+  color: rgb(255, 0, 0);
+  margin: 0;
+  font-size: 0.75rem;
+  margin-top: 3px;
+  text-align: left;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+}

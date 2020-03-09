@@ -113,9 +113,47 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account/advert`;
         // Call endpoint and return
+        console.log(params);
+        
         let patchResponse = await Axios.patch(baseURL, params.body, {headers: params.headers});
 
         return patchResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    /**
+     * Update Account Advert
+     */
+    updateAccountUser: async (params) => {
+      try {
+
+        // Endpoint
+        let baseURL = `${API_URL}/account/user`;
+        // Call endpoint and return
+        console.log(params);
+        
+        let patchResponse = await Axios.patch(baseURL, params.body);
+
+        return patchResponse;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    /**
+     * Account User
+     */
+    getAccountUser: async (username) => {
+      try {
+
+        // Endpoint
+        let baseURL = `${API_URL}/account/user`;
+        // Call endpoint and return
+        console.log("ACCOUNT USERNAME", username);
+        
+        let getResponse = await Axios.get(baseURL, { params: {username}});
+
+        return getResponse;
       } catch (error) {
         throw new Error(error);
       }
@@ -139,14 +177,14 @@ const Wallaclone = API_URL => {
     /**
      * Get User
      */
-    getUser: async owner => {
+    getUser: async username => {
       try {
         // Endpoint
         let baseURL = `${API_URL}/user`;
         // Call endpoint and return
 
         let getResponse = await Axios.get(baseURL, {
-          params: { username: owner }
+          params: { username }
         });
 
         return getResponse;
