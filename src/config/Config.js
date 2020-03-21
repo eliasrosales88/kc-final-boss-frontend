@@ -2,7 +2,7 @@
  * Fichero de configuración
  */
 const config = {
-  API_URL: 'http://localhost:3000/apiv1',
+  API_URL: process.env.REACT_APP_DOMAIN,
   MAX_ADVERTS_GRID: 4,
 };
 
