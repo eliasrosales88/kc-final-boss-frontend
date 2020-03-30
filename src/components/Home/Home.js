@@ -15,7 +15,6 @@ const defaultGetAdvertsParams = {
   includeTotal: "true"
 };
 const Home = props => {
-  console.log(props);
   const { onGetAdverts, paginatorCount } = props;
 
   const getAdverts = useCallback(() => {
@@ -29,7 +28,6 @@ const Home = props => {
   const [page, setPage] = React.useState(1);
   const handlePaginatorChange = (event, value) => {
     setPage(value);
-    console.log("PAGE", value);
     
     let skipAdverts = (value - 1) * parseInt(defaultGetAdvertsParams.limit);
     defaultGetAdvertsParams.skip = skipAdverts;

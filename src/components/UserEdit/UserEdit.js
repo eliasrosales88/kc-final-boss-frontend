@@ -63,7 +63,6 @@ const UserEdit = props => {
     load();
     notify();
     }, [load, notify]);
-  // }, [load]);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -87,9 +86,6 @@ const UserEdit = props => {
   };
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-
-  console.log('USER', user.twitter);
-  
 
   return (
     <div>

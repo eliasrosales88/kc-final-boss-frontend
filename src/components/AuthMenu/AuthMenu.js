@@ -8,8 +8,6 @@ import * as actions from "../../store/actions";
 const AuthMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  // console.log(props);
-  
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -44,13 +42,12 @@ const AuthMenu = props => {
 };
 
 const mapStateToProps = state => {
-  return {
-  };
+  return {};
 };
 const mapDispatchToProps = dispatch => {
   return {
     onRouteRegister: () => dispatch(actions.routeRegister()),
-    onRouteLogin: () => dispatch(actions.routeLogin()),
+    onRouteLogin: () => dispatch(actions.routeLogin())
   };
 };
 

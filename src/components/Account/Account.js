@@ -25,16 +25,11 @@ const Account = props => {
   const { onRouteAcountAdvertCreate, onRouteAcountUserEdit, session } = props;
 
   const username = session.username;
-  console.log(username);
-  
-
-  
-  
 
   return (
     <Fragment>
       <h3>{username}</h3>
-      
+
       <List component="nav" aria-label="main mailbox folders">
         <ListItem button onClick={() => onRouteAcountUserEdit(username)}>
           <ListItemIcon>
@@ -47,7 +42,7 @@ const Account = props => {
             <DeleteIcon />
           </ListItemIcon>
           <ListItemText>
-          <DeleteUserModal  />
+            <DeleteUserModal />
           </ListItemText>
         </ListItem>
         <Divider />
@@ -59,8 +54,7 @@ const Account = props => {
         </ListItem>
       </List>
 
-        <EnhancedTable />
-
+      <EnhancedTable />
     </Fragment>
   );
 };
@@ -76,9 +70,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onGetAdverts: params => dispatch(actions.getAdverts(params)),
-    onRouteAcountAdvertCreate: () => dispatch(actions.routeAcountAdvertCreate()),
-    onRouteAcountUserEdit: (username) => dispatch(actions.routeAcountUserEdit(username))
-
+    onRouteAcountAdvertCreate: () =>
+      dispatch(actions.routeAcountAdvertCreate()),
+    onRouteAcountUserEdit: username =>
+      dispatch(actions.routeAcountUserEdit(username))
   };
 };
 

@@ -113,8 +113,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account/advert`;
         // Call endpoint and return
-        console.log(params);
-        
         let patchResponse = await Axios.patch(baseURL, params.body, {headers: params.headers});
 
         return patchResponse;
@@ -131,8 +129,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account/user`;
         // Call endpoint and return
-        console.log(params);
-        
         let patchResponse = await Axios.patch(baseURL, params.body);
 
         return patchResponse;
@@ -149,8 +145,6 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account/user`;
         // Call endpoint and return
-        console.log("ACCOUNT USERNAME", username);
-        
         let getResponse = await Axios.get(baseURL, { params: {username}});
 
         return getResponse;

@@ -20,15 +20,10 @@ const Auth = props => {
 
   let authMethod = props.location.pathname;
 
-  // console.log(props);
-
   const onSubmit = (data, e) => {
     e.preventDefault();
-    authMethod === "/register"
-      ? onRegisterSubmit(data)
-      : onLoginSubmit(data);
+    authMethod === "/register" ? onRegisterSubmit(data) : onLoginSubmit(data);
   };
-
 
   return (
     <Fragment>
@@ -90,7 +85,7 @@ const Auth = props => {
               "Invalid password, should have at least 8 characters"}
           </p>
           <Button type="submit" variant="contained" className="auth-button">
-            {authMethod === "/register" ? "Register": "Login"}
+            {authMethod === "/register" ? "Register" : "Login"}
           </Button>
         </form>
         {notAuth && (

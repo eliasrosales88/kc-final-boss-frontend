@@ -437,7 +437,6 @@ export const updateAccountUser = params => async (
   try {
     const { apiUrl } = getSession(state);
     let userUpdateDataResponse;
-    console.log(params);
     
     userUpdateDataResponse = await WallacloneAPI(apiUrl).updateAccountUser(
       params
