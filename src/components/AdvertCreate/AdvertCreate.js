@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 
 const AdvertCreate = props => {
-  const { register, handleSubmit, errors } = useForm({});
+  const { register, handleSubmit, errors, reset } = useForm({});
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   const handleSelectChange = event => {
@@ -39,6 +39,21 @@ const AdvertCreate = props => {
       { body: dataToSend, headers: { "Content-Type": "multipart/form-data" } },
       props.token
     );
+
+    clearForm();
+  };
+
+  const clearForm = () => {
+    reset();
+    setAdvert({
+      name: "",
+      price: "",
+      description: "",
+      forSale: "true"
+    });
+    setChipData([]);
+    setTag("");
+    setSelectedFile(null);
   };
 
   const buildFormData = object => {
@@ -53,22 +68,21 @@ const AdvertCreate = props => {
     return formData;
   };
 
-  
   const notify = useCallback(() => {
     if (props.ui.notification) {
       props.enqueueSnackbar("Advert created", {
         anchorOrigin: {
           vertical: "top",
-          horizontal: "center",
+          horizontal: "center"
         },
         variant: "success",
         autoHideDuration: 1500
       });
-    }else if(props.ui.success !== undefined && !props.ui.success ) {
+    } else if (props.ui.success !== undefined && !props.ui.success) {
       props.enqueueSnackbar("Something went wrong", {
         anchorOrigin: {
           vertical: "top",
-          horizontal: "center",
+          horizontal: "center"
         },
         variant: "error",
         autoHideDuration: 1500
@@ -132,7 +146,6 @@ const AdvertCreate = props => {
             id="name"
             name="name"
             label="Name"
-            defaultValue={advert.name}
             onChange={handleTextChange}
             fullWidth
             error={!!errors.name}
@@ -147,7 +160,6 @@ const AdvertCreate = props => {
             id="price"
             name="price"
             label="Price"
-            defaultValue={advert.price}
             onChange={handleTextChange}
             fullWidth
             error={!!errors.price}
@@ -169,7 +181,6 @@ const AdvertCreate = props => {
             multiline
             margin="dense"
             name="description"
-            defaultValue={advert.description}
             onChange={handleTextChange}
             fullWidth
             error={!!errors.description}
