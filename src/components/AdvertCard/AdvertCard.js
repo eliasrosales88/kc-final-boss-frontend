@@ -34,7 +34,7 @@ const AdvertCard = props => {
     let year = new Date(updatedAt).getFullYear();
     let month = new Date(updatedAt).getMonth();
     let day = new Date(updatedAt).getDate();
-    return `${day}/${month}/${year} ${dateToConvert}`;
+    return `${day}/${month + 1 }/${year} ${dateToConvert}`;
   };
 
   let advertDate = convertDate(updatedAt);
