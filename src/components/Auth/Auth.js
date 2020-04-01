@@ -90,7 +90,7 @@ const Auth = props => {
         </form>
         {notAuth && (
           <div className="auth-message slideInUp">
-            {props.notAllowedMessage}
+            {props.notAllowedMessage === null ? props.notAllowedMessage: "Not Authorized" }
           </div>
         )}
       </div>

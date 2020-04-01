@@ -87,10 +87,11 @@ export const userLogin = authData => async (
     } else {
       dispatch(authNotAllowed(authDataResponse));
     }
-    //if not registered dispatch(registerNotSucceed)
-    // else dispatch authenticate ??
   } catch (error) {
-    dispatch(authFail(error));
+    console.log("error", error);
+    
+    dispatch(authNotAllowed(error));
+    // dispatch(authFail(error));
   }
 };
 
