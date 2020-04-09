@@ -79,6 +79,7 @@ const Wallaclone = API_URL => {
         // Endpoint
         let baseURL = `${API_URL}/account`;
         // Call endpoint and return
+        delete params.token;
         let getResponse = await Axios.get(baseURL, {
           params
         });
