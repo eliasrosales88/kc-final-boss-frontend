@@ -1,4 +1,11 @@
+# kc-final-boss-frontend  
+
+This project is intended to work with this [Backend](https://github.com/eliasrosales88/kc-final-boss-backend)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## **Recommended**  
+- Node  v13.7.0  
 
 ## Available Scripts
 
