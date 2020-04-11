@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 
 const UserEdit = props => {
-  const { userStore, session, match, onGetUser, onUpdateUser } = props;
+  const { session, match, onGetUser, onUpdateUser } = props;
   const { register, handleSubmit, errors } = useForm({});
 
   const [user, setUser] = useState({
@@ -26,16 +26,16 @@ const UserEdit = props => {
   //---------------------------------------------------------------------
 
   const load = useCallback(() => {
-    setUser({ ...user, ...userStore });
+    setUser({ ...props.userStore });
 
     if (
-      userStore.username !== session.username ||
-      userStore.username === undefined
+      props.userStore.username !== session.username ||
+      props.userStore.username === undefined
     ) {
       onGetUser(match.params.username);
-      setUser({ ...user, ...userStore });
+      setUser({...props.userStore });
     }
-  }, [match.params.username, onGetUser, session.username, userStore.username]);
+  }, [props.userStore, session.username, onGetUser, match.params.username]);
 
   const notify = useCallback(() => {
     if (props.ui.notification) {
