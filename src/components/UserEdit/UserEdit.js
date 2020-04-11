@@ -18,13 +18,12 @@ const UserEdit = props => {
   const { register, handleSubmit, errors } = useForm({});
 
   const [user, setUser] = useState({
-    about: "",
-    twitter: ""
+    ...props.userStore
   });
-
+  
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-
+  
   const load = useCallback(() => {
     setUser({ ...props.userStore });
 
